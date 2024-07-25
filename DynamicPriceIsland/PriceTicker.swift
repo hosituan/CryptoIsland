@@ -7,16 +7,19 @@
 
 import Foundation
 
-enum PriceTicker: String {
+enum PriceTicker: String, CaseIterable {
     case bitcoin = "BTCUSDT"
+    case eth = "ETHUSDT"
     var imageName: String {
         switch self {
         case .bitcoin: "bitcoin"
+        case .eth: "eth"
         }
     }
     var name: String {
         switch self {
-        case .bitcoin: self.rawValue
+        case .bitcoin: "BTC"
+        case .eth: "ETH"
         }
     }
 }

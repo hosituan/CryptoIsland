@@ -36,7 +36,7 @@ struct LiveActivityLiveActivity: Widget {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 16, height: 16)
-                    Text(PriceTicker(rawValue: context.state.symbol)?.rawValue ?? "")
+                    Text(PriceTicker(rawValue: context.state.symbol)?.name ?? "")
                 }
             } compactTrailing: {
                 Text("\(context.state.price.toDouble().asCurrency())")
@@ -46,7 +46,7 @@ struct LiveActivityLiveActivity: Widget {
                     .background(context.state.isIncrease ? Color.green : Color.red)
                     .cornerRadius(12)
             } minimal: {
-                Text("\(context.state.price.toDouble().asCurrency())")
+                Text("\(context.state.price)")
                     .padding(2)
                     .padding(.horizontal, 2)
                     .minimumScaleFactor(0.5)

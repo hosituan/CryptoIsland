@@ -31,12 +31,65 @@ class LiveActivityManager: NSObject, ObservableObject {
         }
     }
     
-    func startActivity() {
+    
+    func callAPIToUpdate(deviceToken: String, type: PriceTicker) {
+        let baseURL = "https://swifty-solutions.com/dynamic-island/subscribe"
+        let deviceId = UIDevice.current.identifierForVendor?.uuidString ?? "DeviceID"
+        var urlComponents = URLComponents(string: baseURL)!
+        urlComponents.queryItems = [
+            URLQueryItem(name: "deviceToken", value: deviceToken),
+            URLQueryItem(name: "symbol", value: type.rawValue),
+            URLQueryItem(name: "deviceId", value: deviceId)
+        ]
+        guard let url = urlComponents.url else {
+            fatalError("Invalid URL")
+        }
+        let session = URLSession.shared
+        let task = session.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+                return
+            }
+            guard let data = data else {
+                print("No data received")
+                return
+            }
+            print("Response data: \(String(data: data, encoding: .utf8) ?? "")")
+        }
+        task.resume()
+    }
+    
+    func callAPIToStop() {
+        let baseURL = "https://swifty-solutions.com/dynamic-island/unsubscribe"
+        let deviceId = UIDevice.current.identifierForVendor?.uuidString ?? "DeviceID"
+        var urlComponents = URLComponents(string: baseURL)!
+        urlComponents.queryItems = [
+            URLQueryItem(name: "deviceId", value: deviceId)
+        ]
+        guard let url = urlComponents.url else {
+            fatalError("Invalid URL")
+        }
+        let session = URLSession.shared
+        let task = session.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+                return
+            }
+            guard let data = data else {
+                print("No data received")
+                return
+            }
+            print("Response data: \(String(data: data, encoding: .utf8) ?? "")")
+        }
+        task.resume()
+    }
+    
+    func startActivity(type: PriceTicker) {
         guard ActivityAuthorizationInfo().areActivitiesEnabled else {
             print("You can't start live activity.")
             return
         }
-        
+        LiveActivityManager.shared.endActivity(dismissTimeInterval: -1)
         do {
             let atttribute = BitcoinTickerAttributes(name:"APNsPush")
             let initialState = BitcoinTickerAttributes.ContentState(price: "", symbol: "", isIncrease: true)
@@ -46,7 +99,6 @@ class LiveActivityManager: NSObject, ObservableObject {
                 pushType: .token
             )
             self.currentActivity = activity
-            
             _ = activity.pushToken
             Task {
                 for await pushToken in activity.pushTokenUpdates {
@@ -54,6 +106,7 @@ class LiveActivityManager: NSObject, ObservableObject {
                         $0 + String(format: "%02x", $1)
                     }
                     print("Activity:\(activity.id) push token: \(pushTokenString)")
+                    self.callAPIToUpdate(deviceToken: pushTokenString, type: type)
                 }
             }
         } catch {
@@ -109,6 +162,7 @@ class LiveActivityManager: NSObject, ObservableObject {
             }
             
             await activity.end(ActivityContent(state: finalState, staleDate: nil), dismissalPolicy: dismissalPolicy)
+            self.callAPIToStop()
         }
     }
     
