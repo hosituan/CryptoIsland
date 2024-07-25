@@ -14,15 +14,19 @@
 		FB1306DA2C502909003D64D4 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB1306D92C502909003D64D4 /* WidgetKit.framework */; };
 		FB1306DC2C502909003D64D4 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB1306DB2C502909003D64D4 /* SwiftUI.framework */; };
 		FB1306DF2C502909003D64D4 /* DynamicPriceIslandWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1306DE2C502909003D64D4 /* DynamicPriceIslandWidgetBundle.swift */; };
-		FB1306E12C502909003D64D4 /* DynamicPriceIslandWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1306E02C502909003D64D4 /* DynamicPriceIslandWidgetLiveActivity.swift */; };
-		FB1306E32C502909003D64D4 /* DynamicPriceIslandWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1306E22C502909003D64D4 /* DynamicPriceIslandWidget.swift */; };
+		FB1306E12C502909003D64D4 /* LiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1306E02C502909003D64D4 /* LiveActivity.swift */; };
+		FB1306E32C502909003D64D4 /* LiveActivityLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1306E22C502909003D64D4 /* LiveActivityLiveActivity.swift */; };
 		FB1306E72C50290A003D64D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB1306E62C50290A003D64D4 /* Assets.xcassets */; };
 		FB1306EB2C50290A003D64D4 /* DynamicPriceIslandWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FB1306D72C502909003D64D4 /* DynamicPriceIslandWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		FB1306F22C502AAE003D64D4 /* DynamicPriceIslandWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1306E02C502909003D64D4 /* DynamicPriceIslandWidgetLiveActivity.swift */; };
-		FB1306F52C502BB7003D64D4 /* DynamicIsland.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = FB1306F42C502BB7003D64D4 /* DynamicIsland.intentdefinition */; };
-		FB1306F62C502BC3003D64D4 /* DynamicIsland.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = FB1306F42C502BB7003D64D4 /* DynamicIsland.intentdefinition */; };
 		FB20847B2C511C1D0046BC77 /* BitcoinAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB20847A2C511C1D0046BC77 /* BitcoinAttribute.swift */; };
 		FB20847C2C511C1F0046BC77 /* BitcoinAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB20847A2C511C1D0046BC77 /* BitcoinAttribute.swift */; };
+		FB2084842C528EB00046BC77 /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2084832C528EB00046BC77 /* LiveActivityManager.swift */; };
+		FB2084862C5295F40046BC77 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2084852C5295F40046BC77 /* AppIntent.swift */; };
+		FB2084872C52967D0046BC77 /* LiveActivityLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1306E22C502909003D64D4 /* LiveActivityLiveActivity.swift */; };
+		FB4030872C52A8C900D9E387 /* Extension+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4030862C52A8C900D9E387 /* Extension+.swift */; };
+		FB4030882C52A8CE00D9E387 /* Extension+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4030862C52A8C900D9E387 /* Extension+.swift */; };
+		FB40308A2C52A8F700D9E387 /* PriceTicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4030892C52A8F700D9E387 /* PriceTicker.swift */; };
+		FB40308B2C52A96B00D9E387 /* PriceTicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4030892C52A8F700D9E387 /* PriceTicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,15 +63,18 @@
 		FB1306D92C502909003D64D4 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		FB1306DB2C502909003D64D4 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		FB1306DE2C502909003D64D4 /* DynamicPriceIslandWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicPriceIslandWidgetBundle.swift; sourceTree = "<group>"; };
-		FB1306E02C502909003D64D4 /* DynamicPriceIslandWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicPriceIslandWidgetLiveActivity.swift; sourceTree = "<group>"; };
-		FB1306E22C502909003D64D4 /* DynamicPriceIslandWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicPriceIslandWidget.swift; sourceTree = "<group>"; };
+		FB1306E02C502909003D64D4 /* LiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivity.swift; sourceTree = "<group>"; };
+		FB1306E22C502909003D64D4 /* LiveActivityLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityLiveActivity.swift; sourceTree = "<group>"; };
 		FB1306E62C50290A003D64D4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB1306E82C50290A003D64D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FB1306F42C502BB7003D64D4 /* DynamicIsland.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = DynamicIsland.intentdefinition; sourceTree = "<group>"; };
 		FB1306F72C502BDD003D64D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FB1306F82C50AF87003D64D4 /* DynamicPriceIsland.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DynamicPriceIsland.entitlements; sourceTree = "<group>"; };
-		FB1306F92C50AFC2003D64D4 /* DynamicPriceIslandWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DynamicPriceIslandWidgetExtension.entitlements; sourceTree = "<group>"; };
 		FB20847A2C511C1D0046BC77 /* BitcoinAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinAttribute.swift; sourceTree = "<group>"; };
+		FB2084832C528EB00046BC77 /* LiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityManager.swift; sourceTree = "<group>"; };
+		FB2084852C5295F40046BC77 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
+		FB2084892C52980C0046BC77 /* DynamicPriceIslandWidgetExtension.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = DynamicPriceIslandWidgetExtension.entitlements; sourceTree = "<group>"; };
+		FB4030862C52A8C900D9E387 /* Extension+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+.swift"; sourceTree = "<group>"; };
+		FB4030892C52A8F700D9E387 /* PriceTicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceTicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,7 +100,7 @@
 		FB1306B92C5023C2003D64D4 = {
 			isa = PBXGroup;
 			children = (
-				FB1306F92C50AFC2003D64D4 /* DynamicPriceIslandWidgetExtension.entitlements */,
+				FB2084892C52980C0046BC77 /* DynamicPriceIslandWidgetExtension.entitlements */,
 				FB1306C42C5023C2003D64D4 /* DynamicPriceIsland */,
 				FB1306DD2C502909003D64D4 /* DynamicPriceIslandWidget */,
 				FB1306D82C502909003D64D4 /* Frameworks */,
@@ -116,7 +123,10 @@
 				FB1306F82C50AF87003D64D4 /* DynamicPriceIsland.entitlements */,
 				FB1306F72C502BDD003D64D4 /* Info.plist */,
 				FB1306C52C5023C2003D64D4 /* DynamicPriceIslandApp.swift */,
+				FB2084832C528EB00046BC77 /* LiveActivityManager.swift */,
 				FB1306C72C5023C2003D64D4 /* ContentView.swift */,
+				FB4030862C52A8C900D9E387 /* Extension+.swift */,
+				FB4030892C52A8F700D9E387 /* PriceTicker.swift */,
 				FB20847A2C511C1D0046BC77 /* BitcoinAttribute.swift */,
 				FB1306C92C5023C3003D64D4 /* Assets.xcassets */,
 				FB1306CB2C5023C3003D64D4 /* Preview Content */,
@@ -145,9 +155,9 @@
 			isa = PBXGroup;
 			children = (
 				FB1306DE2C502909003D64D4 /* DynamicPriceIslandWidgetBundle.swift */,
-				FB1306E02C502909003D64D4 /* DynamicPriceIslandWidgetLiveActivity.swift */,
-				FB1306E22C502909003D64D4 /* DynamicPriceIslandWidget.swift */,
-				FB1306F42C502BB7003D64D4 /* DynamicIsland.intentdefinition */,
+				FB1306E02C502909003D64D4 /* LiveActivity.swift */,
+				FB2084852C5295F40046BC77 /* AppIntent.swift */,
+				FB1306E22C502909003D64D4 /* LiveActivityLiveActivity.swift */,
 				FB1306E62C50290A003D64D4 /* Assets.xcassets */,
 				FB1306E82C50290A003D64D4 /* Info.plist */,
 			);
@@ -257,9 +267,11 @@
 			files = (
 				FB20847B2C511C1D0046BC77 /* BitcoinAttribute.swift in Sources */,
 				FB1306C82C5023C2003D64D4 /* ContentView.swift in Sources */,
+				FB2084842C528EB00046BC77 /* LiveActivityManager.swift in Sources */,
+				FB40308A2C52A8F700D9E387 /* PriceTicker.swift in Sources */,
+				FB2084872C52967D0046BC77 /* LiveActivityLiveActivity.swift in Sources */,
 				FB1306C62C5023C2003D64D4 /* DynamicPriceIslandApp.swift in Sources */,
-				FB1306F22C502AAE003D64D4 /* DynamicPriceIslandWidgetLiveActivity.swift in Sources */,
-				FB1306F52C502BB7003D64D4 /* DynamicIsland.intentdefinition in Sources */,
+				FB4030872C52A8C900D9E387 /* Extension+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,10 +280,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB20847C2C511C1F0046BC77 /* BitcoinAttribute.swift in Sources */,
-				FB1306E32C502909003D64D4 /* DynamicPriceIslandWidget.swift in Sources */,
+				FB1306E32C502909003D64D4 /* LiveActivityLiveActivity.swift in Sources */,
+				FB2084862C5295F40046BC77 /* AppIntent.swift in Sources */,
+				FB40308B2C52A96B00D9E387 /* PriceTicker.swift in Sources */,
 				FB1306DF2C502909003D64D4 /* DynamicPriceIslandWidgetBundle.swift in Sources */,
-				FB1306F62C502BC3003D64D4 /* DynamicIsland.intentdefinition in Sources */,
-				FB1306E12C502909003D64D4 /* DynamicPriceIslandWidgetLiveActivity.swift in Sources */,
+				FB1306E12C502909003D64D4 /* LiveActivity.swift in Sources */,
+				FB4030882C52A8CE00D9E387 /* Extension+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,6 +426,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DynamicPriceIsland/DynamicPriceIsland.entitlements;
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DynamicPriceIsland/Preview Content\"";
@@ -446,6 +461,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DynamicPriceIsland/DynamicPriceIsland.entitlements;
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DynamicPriceIsland/Preview Content\"";

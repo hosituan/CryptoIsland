@@ -11,6 +11,7 @@ import SwiftUI
 @main
 struct DynamicPriceIslandWidgetBundle: WidgetBundle {
     var body: some Widget {
-        DynamicPriceIslandWidgetLiveActivity()
+        LiveActivity()
+        LiveActivityLiveActivity()
     }
 }

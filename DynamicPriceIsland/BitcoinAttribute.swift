@@ -16,10 +16,11 @@ struct BitcoinPrice: Codable {
 struct BitcoinTickerAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
         var price: String
-        var imageName: String
+        var symbol: String
+        var isIncrease: Bool
     }
     
-    var name = "BitcoinTicker"
+    var name: String
     
 }
 
