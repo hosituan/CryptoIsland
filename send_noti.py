@@ -2,6 +2,9 @@ import requests
 import subprocess
 import time
 import json
+import flask
+from flask import Flask
+app = Flask(__name__)
 
 def fetch_coin_price(symbol):
     base_url = "https://api.binance.com/api/v3/ticker/price"
@@ -67,3 +70,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
