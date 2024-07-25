@@ -1,0 +1,567 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FB1306C62C5023C2003D64D4 /* DynamicPriceIslandApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1306C52C5023C2003D64D4 /* DynamicPriceIslandApp.swift */; };
+		FB1306C82C5023C2003D64D4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1306C72C5023C2003D64D4 /* ContentView.swift */; };
+		FB1306CA2C5023C3003D64D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB1306C92C5023C3003D64D4 /* Assets.xcassets */; };
+		FB1306CD2C5023C3003D64D4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB1306CC2C5023C3003D64D4 /* Preview Assets.xcassets */; };
+		FB1306DA2C502909003D64D4 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB1306D92C502909003D64D4 /* WidgetKit.framework */; };
+		FB1306DC2C502909003D64D4 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB1306DB2C502909003D64D4 /* SwiftUI.framework */; };
+		FB1306DF2C502909003D64D4 /* DynamicPriceIslandWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1306DE2C502909003D64D4 /* DynamicPriceIslandWidgetBundle.swift */; };
+		FB1306E12C502909003D64D4 /* DynamicPriceIslandWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1306E02C502909003D64D4 /* DynamicPriceIslandWidgetLiveActivity.swift */; };
+		FB1306E32C502909003D64D4 /* DynamicPriceIslandWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1306E22C502909003D64D4 /* DynamicPriceIslandWidget.swift */; };
+		FB1306E72C50290A003D64D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB1306E62C50290A003D64D4 /* Assets.xcassets */; };
+		FB1306EB2C50290A003D64D4 /* DynamicPriceIslandWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FB1306D72C502909003D64D4 /* DynamicPriceIslandWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FB1306F22C502AAE003D64D4 /* DynamicPriceIslandWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1306E02C502909003D64D4 /* DynamicPriceIslandWidgetLiveActivity.swift */; };
+		FB1306F52C502BB7003D64D4 /* DynamicIsland.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = FB1306F42C502BB7003D64D4 /* DynamicIsland.intentdefinition */; };
+		FB1306F62C502BC3003D64D4 /* DynamicIsland.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = FB1306F42C502BB7003D64D4 /* DynamicIsland.intentdefinition */; };
+		FB20847B2C511C1D0046BC77 /* BitcoinAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB20847A2C511C1D0046BC77 /* BitcoinAttribute.swift */; };
+		FB20847C2C511C1F0046BC77 /* BitcoinAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB20847A2C511C1D0046BC77 /* BitcoinAttribute.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FB1306E92C50290A003D64D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB1306BA2C5023C2003D64D4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FB1306D62C502909003D64D4;
+			remoteInfo = DynamicPriceIslandWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FB1306EF2C50290A003D64D4 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				FB1306EB2C50290A003D64D4 /* DynamicPriceIslandWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		FB1306C22C5023C2003D64D4 /* DynamicPriceIsland.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DynamicPriceIsland.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB1306C52C5023C2003D64D4 /* DynamicPriceIslandApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicPriceIslandApp.swift; sourceTree = "<group>"; };
+		FB1306C72C5023C2003D64D4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		FB1306C92C5023C3003D64D4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FB1306CC2C5023C3003D64D4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		FB1306D72C502909003D64D4 /* DynamicPriceIslandWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DynamicPriceIslandWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB1306D92C502909003D64D4 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		FB1306DB2C502909003D64D4 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		FB1306DE2C502909003D64D4 /* DynamicPriceIslandWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicPriceIslandWidgetBundle.swift; sourceTree = "<group>"; };
+		FB1306E02C502909003D64D4 /* DynamicPriceIslandWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicPriceIslandWidgetLiveActivity.swift; sourceTree = "<group>"; };
+		FB1306E22C502909003D64D4 /* DynamicPriceIslandWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicPriceIslandWidget.swift; sourceTree = "<group>"; };
+		FB1306E62C50290A003D64D4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FB1306E82C50290A003D64D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB1306F42C502BB7003D64D4 /* DynamicIsland.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = DynamicIsland.intentdefinition; sourceTree = "<group>"; };
+		FB1306F72C502BDD003D64D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		FB1306F82C50AF87003D64D4 /* DynamicPriceIsland.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DynamicPriceIsland.entitlements; sourceTree = "<group>"; };
+		FB1306F92C50AFC2003D64D4 /* DynamicPriceIslandWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DynamicPriceIslandWidgetExtension.entitlements; sourceTree = "<group>"; };
+		FB20847A2C511C1D0046BC77 /* BitcoinAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinAttribute.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FB1306BF2C5023C2003D64D4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB1306D42C502909003D64D4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB1306DC2C502909003D64D4 /* SwiftUI.framework in Frameworks */,
+				FB1306DA2C502909003D64D4 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FB1306B92C5023C2003D64D4 = {
+			isa = PBXGroup;
+			children = (
+				FB1306F92C50AFC2003D64D4 /* DynamicPriceIslandWidgetExtension.entitlements */,
+				FB1306C42C5023C2003D64D4 /* DynamicPriceIsland */,
+				FB1306DD2C502909003D64D4 /* DynamicPriceIslandWidget */,
+				FB1306D82C502909003D64D4 /* Frameworks */,
+				FB1306C32C5023C2003D64D4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FB1306C32C5023C2003D64D4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FB1306C22C5023C2003D64D4 /* DynamicPriceIsland.app */,
+				FB1306D72C502909003D64D4 /* DynamicPriceIslandWidgetExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FB1306C42C5023C2003D64D4 /* DynamicPriceIsland */ = {
+			isa = PBXGroup;
+			children = (
+				FB1306F82C50AF87003D64D4 /* DynamicPriceIsland.entitlements */,
+				FB1306F72C502BDD003D64D4 /* Info.plist */,
+				FB1306C52C5023C2003D64D4 /* DynamicPriceIslandApp.swift */,
+				FB1306C72C5023C2003D64D4 /* ContentView.swift */,
+				FB20847A2C511C1D0046BC77 /* BitcoinAttribute.swift */,
+				FB1306C92C5023C3003D64D4 /* Assets.xcassets */,
+				FB1306CB2C5023C3003D64D4 /* Preview Content */,
+			);
+			path = DynamicPriceIsland;
+			sourceTree = "<group>";
+		};
+		FB1306CB2C5023C3003D64D4 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				FB1306CC2C5023C3003D64D4 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		FB1306D82C502909003D64D4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FB1306D92C502909003D64D4 /* WidgetKit.framework */,
+				FB1306DB2C502909003D64D4 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FB1306DD2C502909003D64D4 /* DynamicPriceIslandWidget */ = {
+			isa = PBXGroup;
+			children = (
+				FB1306DE2C502909003D64D4 /* DynamicPriceIslandWidgetBundle.swift */,
+				FB1306E02C502909003D64D4 /* DynamicPriceIslandWidgetLiveActivity.swift */,
+				FB1306E22C502909003D64D4 /* DynamicPriceIslandWidget.swift */,
+				FB1306F42C502BB7003D64D4 /* DynamicIsland.intentdefinition */,
+				FB1306E62C50290A003D64D4 /* Assets.xcassets */,
+				FB1306E82C50290A003D64D4 /* Info.plist */,
+			);
+			path = DynamicPriceIslandWidget;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FB1306C12C5023C2003D64D4 /* DynamicPriceIsland */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FB1306D02C5023C3003D64D4 /* Build configuration list for PBXNativeTarget "DynamicPriceIsland" */;
+			buildPhases = (
+				FB1306BE2C5023C2003D64D4 /* Sources */,
+				FB1306BF2C5023C2003D64D4 /* Frameworks */,
+				FB1306C02C5023C2003D64D4 /* Resources */,
+				FB1306EF2C50290A003D64D4 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FB1306EA2C50290A003D64D4 /* PBXTargetDependency */,
+			);
+			name = DynamicPriceIsland;
+			productName = DynamicPriceIsland;
+			productReference = FB1306C22C5023C2003D64D4 /* DynamicPriceIsland.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FB1306D62C502909003D64D4 /* DynamicPriceIslandWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FB1306EC2C50290A003D64D4 /* Build configuration list for PBXNativeTarget "DynamicPriceIslandWidgetExtension" */;
+			buildPhases = (
+				FB1306D32C502909003D64D4 /* Sources */,
+				FB1306D42C502909003D64D4 /* Frameworks */,
+				FB1306D52C502909003D64D4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DynamicPriceIslandWidgetExtension;
+			productName = DynamicPriceIslandWidgetExtension;
+			productReference = FB1306D72C502909003D64D4 /* DynamicPriceIslandWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FB1306BA2C5023C2003D64D4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1520;
+				LastUpgradeCheck = 1520;
+				TargetAttributes = {
+					FB1306C12C5023C2003D64D4 = {
+						CreatedOnToolsVersion = 15.2;
+					};
+					FB1306D62C502909003D64D4 = {
+						CreatedOnToolsVersion = 15.2;
+					};
+				};
+			};
+			buildConfigurationList = FB1306BD2C5023C2003D64D4 /* Build configuration list for PBXProject "DynamicPriceIsland" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FB1306B92C5023C2003D64D4;
+			productRefGroup = FB1306C32C5023C2003D64D4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FB1306C12C5023C2003D64D4 /* DynamicPriceIsland */,
+				FB1306D62C502909003D64D4 /* DynamicPriceIslandWidgetExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FB1306C02C5023C2003D64D4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB1306CD2C5023C3003D64D4 /* Preview Assets.xcassets in Resources */,
+				FB1306CA2C5023C3003D64D4 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB1306D52C502909003D64D4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB1306E72C50290A003D64D4 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FB1306BE2C5023C2003D64D4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB20847B2C511C1D0046BC77 /* BitcoinAttribute.swift in Sources */,
+				FB1306C82C5023C2003D64D4 /* ContentView.swift in Sources */,
+				FB1306C62C5023C2003D64D4 /* DynamicPriceIslandApp.swift in Sources */,
+				FB1306F22C502AAE003D64D4 /* DynamicPriceIslandWidgetLiveActivity.swift in Sources */,
+				FB1306F52C502BB7003D64D4 /* DynamicIsland.intentdefinition in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB1306D32C502909003D64D4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB20847C2C511C1F0046BC77 /* BitcoinAttribute.swift in Sources */,
+				FB1306E32C502909003D64D4 /* DynamicPriceIslandWidget.swift in Sources */,
+				FB1306DF2C502909003D64D4 /* DynamicPriceIslandWidgetBundle.swift in Sources */,
+				FB1306F62C502BC3003D64D4 /* DynamicIsland.intentdefinition in Sources */,
+				FB1306E12C502909003D64D4 /* DynamicPriceIslandWidgetLiveActivity.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FB1306EA2C50290A003D64D4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FB1306D62C502909003D64D4 /* DynamicPriceIslandWidgetExtension */;
+			targetProxy = FB1306E92C50290A003D64D4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		FB1306CE2C5023C3003D64D4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FB1306CF2C5023C3003D64D4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FB1306D12C5023C3003D64D4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DynamicPriceIsland/DynamicPriceIsland.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"DynamicPriceIsland/Preview Content\"";
+				DEVELOPMENT_TEAM = 4NY95N3V93;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DynamicPriceIsland/Info.plist;
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swiftys.com.DynamicPriceIsland;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FB1306D22C5023C3003D64D4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DynamicPriceIsland/DynamicPriceIsland.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"DynamicPriceIsland/Preview Content\"";
+				DEVELOPMENT_TEAM = 4NY95N3V93;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DynamicPriceIsland/Info.plist;
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swiftys.com.DynamicPriceIsland;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		FB1306ED2C50290A003D64D4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = DynamicPriceIslandWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4NY95N3V93;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DynamicPriceIslandWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DynamicPriceIslandWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swiftys.com.DynamicPriceIsland.DynamicPriceIslandWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FB1306EE2C50290A003D64D4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = DynamicPriceIslandWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4NY95N3V93;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DynamicPriceIslandWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DynamicPriceIslandWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swiftys.com.DynamicPriceIsland.DynamicPriceIslandWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FB1306BD2C5023C2003D64D4 /* Build configuration list for PBXProject "DynamicPriceIsland" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FB1306CE2C5023C3003D64D4 /* Debug */,
+				FB1306CF2C5023C3003D64D4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FB1306D02C5023C3003D64D4 /* Build configuration list for PBXNativeTarget "DynamicPriceIsland" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FB1306D12C5023C3003D64D4 /* Debug */,
+				FB1306D22C5023C3003D64D4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FB1306EC2C50290A003D64D4 /* Build configuration list for PBXNativeTarget "DynamicPriceIslandWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FB1306ED2C50290A003D64D4 /* Debug */,
+				FB1306EE2C50290A003D64D4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FB1306BA2C5023C2003D64D4 /* Project object */;
+}
