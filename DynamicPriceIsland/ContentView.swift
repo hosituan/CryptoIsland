@@ -23,49 +23,23 @@ struct ContentView: View {
 struct HomeScreenView: View {
     @State private var showingAlert = false
     @State private var message: String?
+    @State private var subscribeType: PriceTicker?
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 16) {
                 ForEach(PriceTicker.allCases.indices, id: \.self) { index in
-                    Button(action: {
-                        LiveActivityManager.shared.startActivity(type: PriceTicker.allCases[index])
-                        self.message = "Subscribed \(PriceTicker.allCases[index].rawValue).\nPlease go home to enjoy Price Island!"
-                    }, label: {
-                        HStack(spacing: 10) {
-                            Image(PriceTicker.allCases[index].imageName)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 36, height: 36)
-
-                            Text(PriceTicker.allCases[index].name)
-                                .font(.system(size: 16, weight: .semibold))
-                                .foregroundColor(.black)
-                            Spacer()
+                    PriceItemView(type: PriceTicker.allCases[index], selected: self.subscribeType, onTapAction: {
+                        if self.subscribeType == PriceTicker.allCases[index] {
+                            self.subscribeType = nil
+                            LiveActivityManager.shared.endActivity(dismissTimeInterval: -1)
+                        } else {
+                            LiveActivityManager.shared.startActivity(type: PriceTicker.allCases[index])
+                            self.subscribeType = PriceTicker.allCases[index]
                         }
-                        .contentShape(.rect)
                     })
 
                     Divider()
                 }
-                Button(action: {
-                    
-                }, label: {
-                    HStack {
-                        Spacer()
-                        Text("Stop Price Ticker")
-                            .font(.system(size: 16, weight: .semibold))
-                            .padding(16)
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(12)
-                        Spacer()
-                    }
-                    .contentShape(.rect)
-                    .onTapGesture {
-                        LiveActivityManager.shared.endActivity(dismissTimeInterval: -1)
-                    }
-                })
-                .padding(.vertical)
             }
             .padding(20)
         }
@@ -83,6 +57,71 @@ struct HomeScreenView: View {
     }
 }
 
+struct PriceItemView: View {
+    var type: PriceTicker
+    var selected: PriceTicker?
+    var onTapAction: (() -> Void)
+    @State private var price: Double = 0.0
+    @State private var lastPrice: Double = 0.0
+    private let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
+    var body: some View {
+        HStack(spacing: 10) {
+            Image(type.imageName)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 36, height: 36)
+            Text(type.name)
+                .font(.system(size: 16, weight: .semibold))
+                .foregroundColor(.black)
+            Spacer()
+            Text(price.asCurrency())
+                .font(.system(size: 14))
+                .padding(4)
+                .foregroundColor(.white)
+                .background(price >= lastPrice ? Color.green : Color.red)
+                .cornerRadius(5)
+            Button(action: {
+                onTapAction()
+            }, label: {
+                Text(selected == type ? "Unsubscribe" : "Subscribe")
+                    .font(.system(size: 14, weight: .semibold))
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(selected == type ? Color.red : Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(5)
+            })
+        }
+        .contentShape(.rect)
+        .onReceive(timer) { input in
+            self.fetchPrice()
+        }
+    }
+    
+    private func fetchPrice() {
+        guard let url = URL(string: "https://api.binance.com/api/v3/ticker/price?symbol=\(type.rawValue)") 
+        else { return }
+        let session = URLSession.shared
+        let task = session.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+                return
+            }
+            guard let data = data else {
+                print("No data received")
+                return
+            }
+            do {
+                let tickerPrice = try JSONDecoder().decode(BitcoinPrice.self, from: data)
+                self.lastPrice = self.price
+                self.price = tickerPrice.price.toDouble()
+            } catch {
+                print("Failed to decode JSON: \(error.localizedDescription)")
+            }
+        }
+        task.resume()
+    }
+}
 #Preview {
     ContentView()
 }

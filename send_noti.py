@@ -13,6 +13,37 @@ def fetch_coin_price(symbol):
     data = response.json()
     return data['price']
 
+import datetime
+from datetime import datetime, timedelta
+import calendar
+import jwt
+import json
+import os
+import jwt
+import time
+# APNs Auth Key file and credentials
+AUTH_KEY_FILE = '/Users/hosituan/Downloads/AuthKey_F5HG5R857T.p8'
+TEAM_ID = '4NY95N3V93'
+KEY_ID = 'F5HG5R857T'
+
+
+with open(AUTH_KEY_FILE, 'r') as f:
+    secret = f.read()
+
+def getApnToken():
+    # Create the JWT
+    headers = { "alg": "ES256", "kid": KEY_ID }
+    now = calendar.timegm(time.gmtime())
+    print(int(now))
+    payload = { "iss": TEAM_ID, "iat": int(now) }
+
+    token = jwt.encode(payload, secret, algorithm='ES256', headers=headers)
+    print(token)
+    return token
+
+
+apnToken = "eyAiYWxnIjogIkVTMjU2IiwgImtpZCI6ICJGNUhHNVI4NTdUIiB9.eyAiaXNzIjogIjROWTk1TjNWOTMiLCAiaWF0IjogMTcyMTk3NDM2MyB9.MEQCIGNcPGiCufs2BT9Y4b7R-u_psn2esIfhff1LmSVH4ji9AiAguklr6x9U-FdXSFlK4dtZgslFsqRcy5i0SUOdopZliA"
+
 def send_push_notification(token, device_id, symbol, price, is_inscrease):
     # Define the payload with the fetched price
     payload = {
@@ -39,7 +70,7 @@ def send_push_notification(token, device_id, symbol, price, is_inscrease):
     # Define the curl command with variables
     curl_command = [
         "curl", "-v",
-        "--header", f"authorization: bearer {token}",
+        "--header", f"authorization: bearer {apnToken}",
         "--header", "apns-topic: com.swiftys.com.DynamicPriceIsland.push-type.liveactivity",
         "--header", "apns-push-type: liveactivity",
         "--header", "apns-priority: 10",
@@ -50,11 +81,16 @@ def send_push_notification(token, device_id, symbol, price, is_inscrease):
     ]
     
     # Run the curl command
-    subprocess.run(curl_command, capture_output=True, text=True)
+    result = subprocess.run(curl_command, capture_output=True, text=True)
+        # Print results
+    print("STDOUT:")
+    print(result.stdout)
+    print("STDERR:")
+    print(result.stderr)
 
 def main():
-    token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IkY1SEc1Ujg1N1QifQ.eyJpc3MiOiI0Tlk5NU4zVjkzIiwiaWF0IjoxNzIxOTIwNTQ5LjYwNDY5Mn0.uSw0d93IPEaBiZ5z6LXl6Cpni2U1KcbM51GJUhjPliJHqShEGNaXaybvQqZC9tyrq6bmcd2Xqvr_P4q20CyMBg"
-    device_id = "80a25d643e7f492d52a1a35b34de52c7fbc36871f034308704b0487a814e48e36d1861782067a54ab57e7fb49069c207e00343de97b41db4b1b38f0e3ac297126c5cda1cfea855350e9be91eccb788a44a858c8aceba3898b70b8149c653526d0205c0af1edc7bfac91cd2bfa425b14f939592cd64d280a9f123e570f0257619"
+    token = ""
+    device_id = "8096462fc0484d0a1ecb57f0c7a2147f77102bd0e93f99406459e73adcba2a3163e8b8da42e5f3d2c3cbd6d447a7a432b15e99f7f25c54acf25be9e2e27cbaa08ec885792601b83b8e0b94bb486eea888791edda7e4fa0dc836b3adc8c487fa55b9955cbf85405560f37a2c15cc9e3b010292e6ccdd863488760b1464a84c9a8"
     symbol = "BTCUSDT"  # Binance uses "BTCUSDT" instead of "BTC/USD"
     last_price = 0
     while True:
@@ -66,8 +102,9 @@ def main():
         except Exception as e:
             print(f"An error occurred: {e}")
         
-        time.sleep(1)  # Wait for 1 second before fetching and sending again
+        time.sleep(5)  # Wait for 1 second before fetching and sending again
 
 if __name__ == "__main__":
     main()
+    # getApnToken()
     

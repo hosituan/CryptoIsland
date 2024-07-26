@@ -37,14 +37,18 @@ struct LiveActivityLiveActivity: Widget {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 16, height: 16)
                     Text(PriceTicker(rawValue: context.state.symbol)?.name ?? "")
+                    Spacer()
                 }
             } compactTrailing: {
-                Text("\(context.state.price.toDouble().asCurrency())")
-                    .padding(2)
-                    .padding(.horizontal, 2)
-                    .minimumScaleFactor(0.5)
-                    .background(context.state.isIncrease ? Color.green : Color.red)
-                    .cornerRadius(12)
+                HStack {
+                    Spacer()
+                    Text("\(context.state.price.toDouble().asCurrency())")
+                        .padding(2)
+                        .padding(.horizontal, 2)
+                        .minimumScaleFactor(0.5)
+                        .background(context.state.isIncrease ? Color.green : Color.red)
+                        .cornerRadius(12)
+                }
             } minimal: {
                 Text("\(context.state.price)")
                     .padding(2)

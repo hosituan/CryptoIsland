@@ -84,6 +84,12 @@ class LiveActivityManager: NSObject, ObservableObject {
         task.resume()
     }
     
+    func moveToHomeScreen() {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            windowScene.perform(NSSelectorFromString("suspend"))
+        }
+    }
+    
     func startActivity(type: PriceTicker) {
         guard ActivityAuthorizationInfo().areActivitiesEnabled else {
             print("You can't start live activity.")
