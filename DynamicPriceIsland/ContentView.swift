@@ -80,6 +80,7 @@ struct PriceItemView: View {
                 .foregroundColor(.white)
                 .background(price >= lastPrice ? Color.green : Color.red)
                 .cornerRadius(5)
+            Spacer()
             Button(action: {
                 onTapAction()
             }, label: {
