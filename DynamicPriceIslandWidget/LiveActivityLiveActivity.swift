@@ -14,8 +14,22 @@ struct LiveActivityLiveActivity: Widget {
         ActivityConfiguration(for: BitcoinTickerAttributes.self) { context in
             HStack {
                 Image(PriceTicker(rawValue: context.state.symbol)?.imageName ?? "")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 24, height: 24)
                 Text(PriceTicker(rawValue: context.state.symbol)?.rawValue ?? "")
+                    .font(.system(size: 14))
+                Spacer()
+                Text("\(context.state.price.toDouble().asCurrency())")
+                    .padding(2)
+                    .font(.system(size: 14))
+                    .padding(.horizontal, 10)
+                    .minimumScaleFactor(0.5)
+                    .foregroundColor(.white)
+                    .background(context.state.isIncrease ? Color.green : Color.red)
+                    .cornerRadius(12)
             }
+            .padding(.horizontal)
 
         } dynamicIsland: { context in
             DynamicIsland {
@@ -54,6 +68,7 @@ struct LiveActivityLiveActivity: Widget {
                     .padding(2)
                     .padding(.horizontal, 2)
                     .minimumScaleFactor(0.5)
+                    .foregroundColor(.white)
                     .background(context.state.isIncrease ? Color.green : Color.red)
                     .cornerRadius(12)
             }

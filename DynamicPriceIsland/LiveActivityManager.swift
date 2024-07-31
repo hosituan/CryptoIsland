@@ -13,9 +13,11 @@ import UIKit
 
 class LiveActivityManager: NSObject, ObservableObject {
     public static let shared: LiveActivityManager = LiveActivityManager()
-    
+    private let baseUrl = "https://dynamicisland-4bizugbf.b4a.run"
     private var currentActivity: Activity<BitcoinTickerAttributes>? = nil
-    
+    private var lastPrice: Double = 0.0
+    private var price: Double = 0.0
+    var timer: Timer?
     override init() {
         super.init()
     }
@@ -31,15 +33,23 @@ class LiveActivityManager: NSObject, ObservableObject {
         }
     }
     
+    func saveActivity(type: PriceTicker?) {
+        UserDefaults.standard.setValue(type?.rawValue ?? "", forKey: "ticker")
+    }
+    
+    func getSavedActivity() -> PriceTicker? {
+        return PriceTicker(rawValue: UserDefaults.standard.string(forKey: "ticker") ?? "")
+    }
     
     func callAPIToUpdate(deviceToken: String, type: PriceTicker) {
-        let baseURL = "https://swifty-solutions.com/dynamic-island/subscribe"
+        let baseURL = "\(baseUrl)/dynamic-island/subscribe"
         let deviceId = UIDevice.current.identifierForVendor?.uuidString ?? "DeviceID"
         var urlComponents = URLComponents(string: baseURL)!
         urlComponents.queryItems = [
             URLQueryItem(name: "deviceToken", value: deviceToken),
             URLQueryItem(name: "symbol", value: type.rawValue),
-            URLQueryItem(name: "deviceId", value: deviceId)
+            URLQueryItem(name: "deviceId", value: deviceId),
+            URLQueryItem(name: "type", value: "crypto"),
         ]
         guard let url = urlComponents.url else {
             fatalError("Invalid URL")
@@ -60,7 +70,7 @@ class LiveActivityManager: NSObject, ObservableObject {
     }
     
     func callAPIToStop() {
-        let baseURL = "https://swifty-solutions.com/dynamic-island/unsubscribe"
+        let baseURL = "\(baseUrl)/dynamic-island/unsubscribe"
         let deviceId = UIDevice.current.identifierForVendor?.uuidString ?? "DeviceID"
         var urlComponents = URLComponents(string: baseURL)!
         urlComponents.queryItems = [
@@ -95,9 +105,10 @@ class LiveActivityManager: NSObject, ObservableObject {
             print("You can't start live activity.")
             return
         }
-        LiveActivityManager.shared.endActivity(dismissTimeInterval: -1)
+        LiveActivityManager.shared.endActivity()
         do {
-            let atttribute = BitcoinTickerAttributes(name:"APNsPush")
+            
+            let atttribute = BitcoinTickerAttributes(name:"push")
             let initialState = BitcoinTickerAttributes.ContentState(price: "", symbol: "", isIncrease: true)
             let activity = try Activity<BitcoinTickerAttributes>.request(
                 attributes: atttribute,
@@ -105,70 +116,68 @@ class LiveActivityManager: NSObject, ObservableObject {
                 pushType: .token
             )
             self.currentActivity = activity
-            _ = activity.pushToken
+            self.saveActivity(type: type)
             Task {
-                for await pushToken in activity.pushTokenUpdates {
-                    let pushTokenString = pushToken.reduce("") {
-                        $0 + String(format: "%02x", $1)
+                for await activityData in Activity<BitcoinTickerAttributes>.activityUpdates {
+                    for await pushToken in activityData.pushTokenUpdates {
+                        let pushTokenString = pushToken.reduce("") {
+                            $0 + String(format: "%02x", $1)
+                        }
+                        print("Activity:\(activity.id) push token: \(pushTokenString)")
+                        self.callAPIToUpdate(deviceToken: pushTokenString, type: type)
                     }
-                    print("Activity:\(activity.id) push token: \(pushTokenString)")
-                    self.callAPIToUpdate(deviceToken: pushTokenString, type: type)
                 }
             }
+            self.startTimer(type: type)
         } catch {
             print("start Activity From App:\(error)")
         }
     }
     
-    func updateActivity(delay: Double, alert: Bool) {
+    private func startTimer(type: PriceTicker) {
+        self.timer?.invalidate()
+        self.timer = nil
+        self.timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
+            self.fetchPrice(type: type)
+        }
+    }
+    
+    private func fetchPrice(type: PriceTicker) {
+        type.getPrice(source: .coinbase) { tickerPrice in
+            self.lastPrice = self.price
+            self.price = tickerPrice.toDouble()
+            print(self.price)
+            self.updateActivity(type: type, price: "\(self.price)", isIncrease: self.price >= self.lastPrice)
+        }
+    }
+    
+    func updateActivity(type: PriceTicker, price: String, isIncrease: Bool) {
         var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
         backgroundTask = UIApplication.shared.beginBackgroundTask {
             UIApplication.shared.endBackgroundTask(backgroundTask)
             backgroundTask = UIBackgroundTaskIdentifier.invalid
         }
-        DispatchQueue.main.asyncAfter(deadline: .now()+delay) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             UIApplication.shared.endBackgroundTask(backgroundTask)
-            self?.updateActivity(alert: alert)
-        }
-    }
-    
-    
-    func updateActivity(alert:Bool) {
-        Task {
-            guard let activity = currentActivity else {
-                return
-            }
-            
-            var alertConfig: AlertConfiguration? = nil
-            let contentState: BitcoinTickerAttributes.ContentState = BitcoinTickerAttributes.ContentState(price: "", symbol: "", isIncrease: true)
-            
-            if alert {
-                alertConfig = AlertConfiguration(title: "Emoji Changed", body: "Open the app to check", sound: .default)
-            }
-            
-            await activity.update(ActivityContent(state: contentState, staleDate: Date.now + 15, relevanceScore: alert ? 100 : 50), alertConfiguration: alertConfig)
-        }
-    }
-    
-    func endActivity(dismissTimeInterval: Double?) {
-        Task {
-            guard let activity = currentActivity else {
-                return
-            }
-            let finalState = BitcoinTickerAttributes.ContentState(price: "", symbol: "", isIncrease: true)
-            let dismissalPolicy: ActivityUIDismissalPolicy
-            if let dismissTimeInterval = dismissTimeInterval {
-                if dismissTimeInterval <= 0 {
-                    dismissalPolicy = .immediate
-                } else {
-                    dismissalPolicy = .after(.now + dismissTimeInterval)
+            Task {
+                for activity in Activity<BitcoinTickerAttributes>.activities {
+                    let contentState: BitcoinTickerAttributes.ContentState = BitcoinTickerAttributes.ContentState(price: price, symbol: type.rawValue, isIncrease: isIncrease)
+                    await activity.update(ActivityContent(state: contentState, staleDate: Date.now + 15, relevanceScore: 50), alertConfiguration: nil)
                 }
-            } else {
-                dismissalPolicy = .default
             }
-            
-            await activity.end(ActivityContent(state: finalState, staleDate: nil), dismissalPolicy: dismissalPolicy)
+        }
+    }
+    
+    func endActivity() {
+        self.timer?.invalidate()
+        self.timer = nil
+        Task.detached(priority: .high) {
+            for activity in Activity<BitcoinTickerAttributes>.activities {
+                print("Ending Live Activity: \(activity.id)")
+                await activity.end(nil, dismissalPolicy: .immediate)
+            }
             self.callAPIToStop()
+            self.saveActivity(type: nil)
         }
     }
     
