@@ -17,20 +17,10 @@ class LiveActivityManager: NSObject, ObservableObject {
     private var currentActivity: Activity<BitcoinTickerAttributes>? = nil
     private var lastPrice: Double = 0.0
     private var price: Double = 0.0
+    @Published var isShowAlert = false
     var timer: Timer?
     override init() {
         super.init()
-    }
-    
-    func getPushToStartToken() {
-        if #available(iOS 17.2, *) {
-            Task {
-                for await data in Activity<BitcoinTickerAttributes>.pushToStartTokenUpdates {
-                    let token = data.map {String(format: "%02x", $0)}.joined()
-                    print("Activity PushToStart Token: \(token)")
-                }
-            }
-        }
     }
     
     func saveActivity(type: PriceTicker?) {
@@ -55,7 +45,13 @@ class LiveActivityManager: NSObject, ObservableObject {
             fatalError("Invalid URL")
         }
         let session = URLSession.shared
+        DispatchQueue.main.async {
+            self.isShowAlert = true
+        }
         let task = session.dataTask(with: url) { data, response, error in
+            DispatchQueue.main.async {
+                self.isShowAlert = false
+            }
             if let error = error {
                 print("Error: \(error.localizedDescription)")
                 return
@@ -81,6 +77,9 @@ class LiveActivityManager: NSObject, ObservableObject {
         }
         let session = URLSession.shared
         let task = session.dataTask(with: url) { data, response, error in
+            DispatchQueue.main.async {
+                self.isShowAlert = false
+            }
             if let error = error {
                 print("Error: \(error.localizedDescription)")
                 return
@@ -106,6 +105,7 @@ class LiveActivityManager: NSObject, ObservableObject {
             return
         }
         LiveActivityManager.shared.endActivity()
+        self.isShowAlert = true
         do {
             
             let atttribute = BitcoinTickerAttributes(name:"push")
@@ -130,6 +130,7 @@ class LiveActivityManager: NSObject, ObservableObject {
             }
             self.startTimer(type: type)
         } catch {
+            self.isShowAlert = false
             print("start Activity From App:\(error)")
         }
     }

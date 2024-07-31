@@ -11,11 +11,17 @@ import ActivityKit
 import BackgroundTasks
 
 struct ContentView: View {
+    @StateObject var manager = LiveActivityManager.shared
     var body: some View {
-        NavigationView {
-            HomeScreenView()
+        ZStack {
+            NavigationView {
+                HomeScreenView()
+            }
+            .navigationViewStyle(.stack)
+            if manager.isShowAlert {
+                AlertView()
+            }
         }
-        .navigationViewStyle(.stack)
     }
 }
 
@@ -115,6 +121,28 @@ struct PriceItemView: View {
     }
     
 }
+
+struct AlertView: View {
+    var body: some View {
+        ZStack {
+            VStack {
+                Spacer()
+                HStack {
+                    ProgressView()
+                    Text("Processing...")
+                }
+                .padding()
+                .background(Color.white)
+                .cornerRadius(5)
+                Spacer()
+            }
+            .frame(maxWidth: .infinity)
+        }
+        .background(Color.black.opacity(0.3))
+        .ignoresSafeArea()
+    }
+}
+
 #Preview {
     ContentView()
 }
