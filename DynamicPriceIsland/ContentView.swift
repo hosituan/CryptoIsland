@@ -18,8 +18,8 @@ struct ContentView: View {
                 HomeScreenView()
             }
             .navigationViewStyle(.stack)
-            if manager.isShowAlert {
-                AlertView()
+            if let message = manager.message {
+                AlertView(message: message)
             }
         }
     }
@@ -37,8 +37,10 @@ struct HomeScreenView: View {
                     PriceItemView(type: PriceTicker.allCases[index], selected: self.subscribeType, onTapAction: {
                         if self.subscribeType == PriceTicker.allCases[index] {
                             self.subscribeType = nil
-                            LiveActivityManager.shared.endActivity()
+                            LiveActivityManager.shared.message = "Stopping..."
+                            LiveActivityManager.shared.endActivity(completion: { })
                         } else {
+                            LiveActivityManager.shared.message = "Starting..."
                             LiveActivityManager.shared.startActivity(type: PriceTicker.allCases[index])
                             self.subscribeType = PriceTicker.allCases[index]
                         }
@@ -61,10 +63,7 @@ struct HomeScreenView: View {
         }
         .navigationTitle("Crypto Island")
         .onAppear {
-            subscribeType = LiveActivityManager.shared.getSavedActivity()
-            if let subscribeType {
-                LiveActivityManager.shared.startActivity(type: subscribeType)
-            }
+            LiveActivityManager.shared.endActivity(completion: { })
         }
     }
 }
@@ -123,13 +122,14 @@ struct PriceItemView: View {
 }
 
 struct AlertView: View {
+    var message: String
     var body: some View {
         ZStack {
             VStack {
                 Spacer()
-                HStack {
+                HStack(spacing: 10) {
                     ProgressView()
-                    Text("Processing...")
+                    Text(message)
                 }
                 .padding()
                 .background(Color.white)
@@ -140,6 +140,13 @@ struct AlertView: View {
         }
         .background(Color.black.opacity(0.3))
         .ignoresSafeArea()
+    }
+}
+
+
+extension Int {
+    var nanoseconds: UInt64 {
+        return UInt64(self) * 1_000_000_000
     }
 }
 
