@@ -13,115 +13,33 @@ import BackgroundTasks
 struct ContentView: View {
     @StateObject var manager = LiveActivityManager.shared
     var body: some View {
-        ZStack {
-            NavigationView {
-                HomeScreenView()
+        TabView {
+            NavigationStack {
+                HomeScreenView(liveActivityManager: self.manager)
             }
-            .navigationViewStyle(.stack)
+            .tabItem {
+                Label("Home", systemImage: "house")
+            }
+            NavigationStack {
+                SettingsView(liveActivityManager: self.manager)
+            }
+            .tabItem {
+                Label("Settings", systemImage: "gear")
+            }
+        }
+        .overlay(alignment: .center) {
             if let message = manager.message {
-                AlertView(message: message)
+                CryptoProgressView(message: message)
+                    .ignoresSafeArea()
             }
         }
+        .accentColor(.black)
     }
 }
 
 
-struct HomeScreenView: View {
-    @State private var showingAlert = false
-    @State private var message: String?
-    @State private var subscribeType: PriceTicker?
-    var body: some View {
-        ScrollView {
-            LazyVStack(alignment: .leading, spacing: 16) {
-                ForEach(PriceTicker.allCases.indices, id: \.self) { index in
-                    PriceItemView(type: PriceTicker.allCases[index], selected: self.subscribeType, onTapAction: {
-                        if self.subscribeType == PriceTicker.allCases[index] {
-                            self.subscribeType = nil
-                            LiveActivityManager.shared.message = "Stopping..."
-                            LiveActivityManager.shared.endActivity(completion: { })
-                        } else {
-                            LiveActivityManager.shared.message = "Starting..."
-                            LiveActivityManager.shared.startActivity(type: PriceTicker.allCases[index])
-                            self.subscribeType = PriceTicker.allCases[index]
-                        }
-                    })
-                    
-                    Divider()
-                }
-            }
-            .padding(20)
-        }
-        .onChange(of: message, initial: false, {
-            if message != nil {
-                self.showingAlert = true
-            }
-        })
-        .alert(message ?? "", isPresented: $showingAlert) {
-            Button("OK", role: .cancel) {
-                message = nil
-            }
-        }
-        .navigationTitle("Crypto Island")
-        .onAppear {
-            LiveActivityManager.shared.endActivity(completion: { })
-        }
-    }
-}
 
-struct PriceItemView: View {
-    var type: PriceTicker
-    var selected: PriceTicker?
-    var onTapAction: (() -> Void)
-    @State private var price: Double = 0.0
-    @State private var lastPrice: Double = 0.0
-    var body: some View {
-        HStack(spacing: 10) {
-            Image(type.imageName)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 36, height: 36)
-            Text(type.name)
-                .font(.system(size: 16, weight: .semibold))
-                .foregroundColor(.black)
-            Spacer()
-            Text(price.asCurrency())
-                .font(.system(size: 14))
-                .padding(4)
-                .foregroundColor(.white)
-                .background(price >= lastPrice ? Color.green : Color.red)
-                .cornerRadius(5)
-            Spacer()
-            Button(action: {
-                onTapAction()
-            }, label: {
-                Text(selected == type ? "Unsubscribe" : "Subscribe")
-                    .font(.system(size: 14, weight: .semibold))
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 6)
-                    .background(selected == type ? Color.red : Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(5)
-            })
-        }
-        .contentShape(.rect)
-        .onAppear(perform: {
-            self.fetchPrice()
-        })
-    }
-    
-    private func fetchPrice() {
-        self.type.getPrice(source: .coinbase) { tickerPrice in
-            self.lastPrice = self.price
-            self.price = tickerPrice.toDouble()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-                self.fetchPrice()
-            })
-        }
-    }
-    
-}
-
-struct AlertView: View {
+struct CryptoProgressView: View {
     var message: String
     var body: some View {
         ZStack {

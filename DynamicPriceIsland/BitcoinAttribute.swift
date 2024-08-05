@@ -8,19 +8,14 @@
 import Foundation
 import ActivityKit
 
-struct BitcoinPrice: Codable {
-    let symbol: String
-    let price: String
-}
-
 struct BitcoinTickerAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
+        var image: String
         var price: String
         var symbol: String
         var isIncrease: Bool
     }
     
     var name: String
-    
 }
 

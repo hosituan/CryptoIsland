@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "axs.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -41,14 +41,20 @@ extension String {
     }
 }
 
+extension Date {
+    func addingMinutes(_ minutes: Int) -> Date {
+        return Calendar.current.date(byAdding: .minute, value: minutes, to: self) ?? Date()
+    }
+}
+
 extension Double {
-    func asCurrency(locale: Locale = Locale.current, currencyCode: String? = nil, minimumFractionDigits: Int = 2, maximumFractionDigits: Int = 2) -> String {
+    func asCurrency(locale: Locale = Locale.current, currencyCode: String? = nil) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.locale = locale
         formatter.currencyCode = currencyCode
-        formatter.minimumFractionDigits = minimumFractionDigits
-        formatter.maximumFractionDigits = maximumFractionDigits
+        formatter.minimumFractionDigits = Configuration.priceDecimal
+        formatter.maximumFractionDigits = Configuration.priceDecimal
         
         return formatter.string(from: NSNumber(value: self)) ?? ""
     }

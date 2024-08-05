@@ -13,11 +13,11 @@ struct LiveActivityLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: BitcoinTickerAttributes.self) { context in
             HStack {
-                Image(PriceTicker(rawValue: context.state.symbol)?.imageName ?? "")
+                Image(context.state.symbol.lowercased())
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 24, height: 24)
-                Text(PriceTicker(rawValue: context.state.symbol)?.rawValue ?? "")
+                Text(context.state.symbol)
                     .font(.system(size: 14))
                 Spacer()
                 Text("\(context.state.price.toDouble().asCurrency())")
@@ -26,15 +26,13 @@ struct LiveActivityLiveActivity: Widget {
                     .padding(.horizontal, 10)
                     .minimumScaleFactor(0.5)
                     .foregroundColor(.white)
-                    .background(context.state.isIncrease ? Color.green : Color.red)
+                    .background(context.state.isIncrease ? Configuration.upColor : Configuration.downColor)
                     .cornerRadius(12)
             }
             .padding(.horizontal)
 
         } dynamicIsland: { context in
             DynamicIsland {
-                // Expanded UI goes here.  Compose the expanded UI through
-                // various regions, like leading/trailing/center/bottom
                 DynamicIslandExpandedRegion(.leading) {
                     Text("")
                 }
@@ -46,11 +44,11 @@ struct LiveActivityLiveActivity: Widget {
                 }
             } compactLeading: {
                 HStack {
-                    Image(PriceTicker(rawValue: context.state.symbol)?.imageName ?? "")
+                    Image(context.state.symbol.lowercased())
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 16, height: 16)
-                    Text(PriceTicker(rawValue: context.state.symbol)?.name ?? "")
+                        .frame(width: 24, height: 24)
+                    Text(context.state.symbol)
                     Spacer()
                 }
             } compactTrailing: {
@@ -60,7 +58,7 @@ struct LiveActivityLiveActivity: Widget {
                         .padding(2)
                         .padding(.horizontal, 2)
                         .minimumScaleFactor(0.5)
-                        .background(context.state.isIncrease ? Color.green : Color.red)
+                        .background(context.state.isIncrease ? Configuration.upColor : Configuration.downColor)
                         .cornerRadius(12)
                 }
             } minimal: {
@@ -69,7 +67,7 @@ struct LiveActivityLiveActivity: Widget {
                     .padding(.horizontal, 2)
                     .minimumScaleFactor(0.5)
                     .foregroundColor(.white)
-                    .background(context.state.isIncrease ? Color.green : Color.red)
+                    .background(context.state.isIncrease ? Configuration.upColor : Configuration.downColor)
                     .cornerRadius(12)
             }
             .widgetURL(URL(string: "http://www.apple.com"))

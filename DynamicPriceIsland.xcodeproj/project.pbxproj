@@ -27,6 +27,12 @@
 		FB4030882C52A8CE00D9E387 /* Extension+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4030862C52A8C900D9E387 /* Extension+.swift */; };
 		FB40308A2C52A8F700D9E387 /* PriceTicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4030892C52A8F700D9E387 /* PriceTicker.swift */; };
 		FB40308B2C52A96B00D9E387 /* PriceTicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4030892C52A8F700D9E387 /* PriceTicker.swift */; };
+		FBCAC9712C5F54900027DF14 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCAC9702C5F54900027DF14 /* SettingsView.swift */; };
+		FBCAC9732C5F58C20027DF14 /* HomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCAC9722C5F58C20027DF14 /* HomeScreenView.swift */; };
+		FBCAC9752C5F5CB80027DF14 /* CoinBaseCryptoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCAC9742C5F5CB80027DF14 /* CoinBaseCryptoType.swift */; };
+		FBCAC9772C5F7D180027DF14 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBCAC9762C5F7D180027DF14 /* Launch Screen.storyboard */; };
+		FBCAC9792C5F7E9E0027DF14 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCAC9782C5F7E9E0027DF14 /* Configuration.swift */; };
+		FBCAC97A2C5F7EBA0027DF14 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCAC9782C5F7E9E0027DF14 /* Configuration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +81,11 @@
 		FB2084892C52980C0046BC77 /* DynamicPriceIslandWidgetExtension.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = DynamicPriceIslandWidgetExtension.entitlements; sourceTree = "<group>"; };
 		FB4030862C52A8C900D9E387 /* Extension+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+.swift"; sourceTree = "<group>"; };
 		FB4030892C52A8F700D9E387 /* PriceTicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceTicker.swift; sourceTree = "<group>"; };
+		FBCAC9702C5F54900027DF14 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		FBCAC9722C5F58C20027DF14 /* HomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenView.swift; sourceTree = "<group>"; };
+		FBCAC9742C5F5CB80027DF14 /* CoinBaseCryptoType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinBaseCryptoType.swift; sourceTree = "<group>"; };
+		FBCAC9762C5F7D180027DF14 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		FBCAC9782C5F7E9E0027DF14 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,7 +135,12 @@
 				FB1306F72C502BDD003D64D4 /* Info.plist */,
 				FB1306C52C5023C2003D64D4 /* DynamicPriceIslandApp.swift */,
 				FB2084832C528EB00046BC77 /* LiveActivityManager.swift */,
+				FBCAC9782C5F7E9E0027DF14 /* Configuration.swift */,
+				FBCAC9742C5F5CB80027DF14 /* CoinBaseCryptoType.swift */,
 				FB1306C72C5023C2003D64D4 /* ContentView.swift */,
+				FBCAC9722C5F58C20027DF14 /* HomeScreenView.swift */,
+				FBCAC9762C5F7D180027DF14 /* Launch Screen.storyboard */,
+				FBCAC9702C5F54900027DF14 /* SettingsView.swift */,
 				FB4030862C52A8C900D9E387 /* Extension+.swift */,
 				FB4030892C52A8F700D9E387 /* PriceTicker.swift */,
 				FB20847A2C511C1D0046BC77 /* BitcoinAttribute.swift */,
@@ -245,6 +261,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBCAC9772C5F7D180027DF14 /* Launch Screen.storyboard in Resources */,
 				FB1306CD2C5023C3003D64D4 /* Preview Assets.xcassets in Resources */,
 				FB1306CA2C5023C3003D64D4 /* Assets.xcassets in Resources */,
 			);
@@ -265,13 +282,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBCAC9752C5F5CB80027DF14 /* CoinBaseCryptoType.swift in Sources */,
 				FB20847B2C511C1D0046BC77 /* BitcoinAttribute.swift in Sources */,
+				FBCAC9712C5F54900027DF14 /* SettingsView.swift in Sources */,
 				FB1306C82C5023C2003D64D4 /* ContentView.swift in Sources */,
+				FBCAC9732C5F58C20027DF14 /* HomeScreenView.swift in Sources */,
 				FB2084842C528EB00046BC77 /* LiveActivityManager.swift in Sources */,
 				FB40308A2C52A8F700D9E387 /* PriceTicker.swift in Sources */,
 				FB2084872C52967D0046BC77 /* LiveActivityLiveActivity.swift in Sources */,
 				FB1306C62C5023C2003D64D4 /* DynamicPriceIslandApp.swift in Sources */,
 				FB4030872C52A8C900D9E387 /* Extension+.swift in Sources */,
+				FBCAC9792C5F7E9E0027DF14 /* Configuration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,6 +306,7 @@
 				FB40308B2C52A96B00D9E387 /* PriceTicker.swift in Sources */,
 				FB1306DF2C502909003D64D4 /* DynamicPriceIslandWidgetBundle.swift in Sources */,
 				FB1306E12C502909003D64D4 /* LiveActivity.swift in Sources */,
+				FBCAC97A2C5F7EBA0027DF14 /* Configuration.swift in Sources */,
 				FB4030882C52A8CE00D9E387 /* Extension+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -428,7 +450,7 @@
 				CODE_SIGN_ENTITLEMENTS = DynamicPriceIsland/DynamicPriceIsland.entitlements;
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2024073101;
+				CURRENT_PROJECT_VERSION = 2024080401;
 				DEVELOPMENT_ASSET_PATHS = "\"DynamicPriceIsland/Preview Content\"";
 				DEVELOPMENT_TEAM = 4NY95N3V93;
 				ENABLE_PREVIEWS = YES;
@@ -438,6 +460,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -445,7 +468,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.4;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.swiftys.com.DynamicPriceIsland;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -463,7 +486,7 @@
 				CODE_SIGN_ENTITLEMENTS = DynamicPriceIsland/DynamicPriceIsland.entitlements;
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2024073101;
+				CURRENT_PROJECT_VERSION = 2024080401;
 				DEVELOPMENT_ASSET_PATHS = "\"DynamicPriceIsland/Preview Content\"";
 				DEVELOPMENT_TEAM = 4NY95N3V93;
 				ENABLE_PREVIEWS = YES;
@@ -473,6 +496,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -480,7 +504,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.4;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.swiftys.com.DynamicPriceIsland;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
