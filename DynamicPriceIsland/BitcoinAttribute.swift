@@ -8,7 +8,7 @@
 import Foundation
 import ActivityKit
 
-struct BitcoinTickerAttributes: ActivityAttributes {
+struct TickerAttribute: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
         var image: String
         var price: String

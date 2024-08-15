@@ -11,7 +11,7 @@ import SwiftUI
 
 struct LiveActivityLiveActivity: Widget {
     var body: some WidgetConfiguration {
-        ActivityConfiguration(for: BitcoinTickerAttributes.self) { context in
+        ActivityConfiguration(for: TickerAttribute.self) { context in
             HStack {
                 Image(context.state.symbol.lowercased())
                     .resizable()

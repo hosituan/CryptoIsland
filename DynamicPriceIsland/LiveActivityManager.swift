@@ -10,20 +10,28 @@ import ActivityKit
 import os.log
 import UIKit
 import SwiftUI
+import Combine
 
 
 class LiveActivityManager: NSObject, ObservableObject {
     public static let shared: LiveActivityManager = LiveActivityManager()
-    private let baseUrl = "http://127.0.0.1:8080" //https://dynamicisland-4bizugbf.b4a.run"
-    private var currentActivity: Activity<BitcoinTickerAttributes>? = nil
+    private let baseUrl = "https://dynamicisland-4bizugbf.b4a.run"
+    private var currentActivity: Activity<TickerAttribute>? = nil
     private var lastPrice: Double = 0.0
     private var price: Double = 0.0
-    @Published var coinList = [Crypto]()
-    @Published var originalList = [Crypto]()
+    @Published var favorites = [MoneyAsset]()
+    @Published var recommendedList = [MoneyAsset]()
+    @Published var searchResultList = [MoneyAsset]()
     @Published var message: String?
+    @Published var selectedSheetAsset: MoneyAsset?
+    @Published var searchText: String = ""
+    var cancelables = Set<AnyCancellable>()
     var timer: Timer?
     override init() {
         super.init()
+        $searchText.debounce(for: 0.3, scheduler: RunLoop.main).sink { value in
+            self.search(text: value.trimmingCharacters(in: .whitespaces))
+        }.store(in: &cancelables)
     }
     
     func saveActivity(code: String?) {
@@ -34,19 +42,23 @@ class LiveActivityManager: NSObject, ObservableObject {
         return UserDefaults.standard.string(forKey: "ticker") ?? ""
     }
     
-    func callAPIToUpdate(deviceToken: String, code: String) {
+    func callAPIToUpdate(deviceToken: String, asset: MoneyAsset) {
         let baseURL = "\(baseUrl)/dynamic-island/subscribe"
         let deviceId = UIDevice.current.identifierForVendor?.uuidString ?? "DeviceID"
-        let crypto = self.coinList.first {
-            $0.code == code
-        }
+        
         var urlComponents = URLComponents(string: baseURL)!
+        let nextMins = Configuration.stopAfter * 60
+        let stopAt = Int(Date().addingMinutes(Int(nextMins)).timeIntervalSince1970)
+        Configuration.stopAt = stopAt
         var queryItems = [
             URLQueryItem(name: "deviceToken", value: deviceToken),
-            URLQueryItem(name: "symbol", value: code),
+            URLQueryItem(name: "symbol", value: asset.symbol),
             URLQueryItem(name: "deviceId", value: deviceId),
+            URLQueryItem(name: "screener", value: asset.screener),
+            URLQueryItem(name: "exchange", value: asset.exchange),
             URLQueryItem(name: "type", value: "crypto"),
-            URLQueryItem(name: "image", value: crypto?.image ?? "")
+            URLQueryItem(name: "image", value: asset.image ?? ""),
+            URLQueryItem(name: "stop", value: "\(stopAt)")
         ]
         #if DEBUG
         queryItems.append(URLQueryItem(name: "env", value: "debug"))
@@ -84,7 +96,7 @@ class LiveActivityManager: NSObject, ObservableObject {
         var urlComponents = URLComponents(string: url)!
         urlComponents.queryItems = [
             URLQueryItem(name: "deviceId", value: deviceId),
-            URLQueryItem(name: "stop", value: "\(Date().timeIntervalSince1970)")
+            URLQueryItem(name: "stop", value: "\(Int(Date().timeIntervalSince1970))")
         ]
         guard let url = urlComponents.url else {
             fatalError("Invalid URL")
@@ -144,21 +156,21 @@ class LiveActivityManager: NSObject, ObservableObject {
         }
     }
     
-    func startActivity(code: String) {
+    func startActivity(asset: MoneyAsset) {
         guard ActivityAuthorizationInfo().areActivitiesEnabled else {
             print("You can't start live activity.")
             return
         }
         LiveActivityManager.shared.endActivity(completion: { [weak self] in
             guard let self else { return }
-            let atttribute = BitcoinTickerAttributes(name:"push")
-            let initialState = BitcoinTickerAttributes.ContentState(image: self.originalList.first(where: { $0.code == code})?.image ?? "", price: "", symbol: self.originalList.first(where: { $0.code == code})?.code ?? "", isIncrease: true)
-            self.currentActivity = try! Activity<BitcoinTickerAttributes>.request(
+            let atttribute = TickerAttribute(name:"push")
+            let initialState = TickerAttribute.ContentState(image: asset.image ?? "", price: "", symbol: asset.symbol, isIncrease: true)
+            self.currentActivity = try! Activity<TickerAttribute>.request(
                 attributes: atttribute,
                 content: .init(state:initialState , staleDate: nil),
                 pushType: .token
             )
-            self.saveActivity(code: code)
+            self.saveActivity(code: asset.symbol)
             DispatchQueue.main.async {
                 withAnimation {
                     self.message = "Starting..."
@@ -170,12 +182,12 @@ class LiveActivityManager: NSObject, ObservableObject {
                         $0 + String(format: "%02x", $1)
                     }
                     print("Activity:\(self.currentActivity?.id ?? "") push token: \(pushTokenString)")
-                    self.callAPIToUpdate(deviceToken: pushTokenString, code: code)
+                    self.callAPIToUpdate(deviceToken: pushTokenString, asset: asset)
                 }
             }
         })
 
-        self.startTimer(code: code)
+//        self.startTimer(code: code)
     }
     
     private func startTimer(code: String) {
@@ -183,19 +195,23 @@ class LiveActivityManager: NSObject, ObservableObject {
         self.timer = nil
         self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
             print("timer running")
-            self.fetchPrice(code: code)
+            if Configuration.stopAt > Int(Date().timeIntervalSince1970) {
+                self.fetchPrice(code: code)
+            } else {
+                self.timer?.invalidate()
+            }
         }
     }
     
     private func fetchPrice(code: String) {
-        self.lastPrice = self.price
-        self.getPrice(code: code) { price in
-            self.price = Double(price) ?? 0
-            self.updateActivity(type: self.originalList.first(where: { $0.code == code}) ?? .empty, price: price, isIncrease: self.price >= self.lastPrice)
-        }
+//        self.lastPrice = self.price
+//        self.getPrice(code: code) { price in
+//            self.price = Double(price) ?? 0
+//            self.updateActivity(type: self.originalList.first(where: { $0.code == code}) ?? .empty, price: price, isIncrease: self.price >= self.lastPrice)
+//        }
     }
 
-    func updateActivity(type: Crypto, price: String, isIncrease: Bool) {
+    func updateActivity(type: MoneyAsset, price: String, isIncrease: Bool) {
         var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
         backgroundTask = UIApplication.shared.beginBackgroundTask {
             UIApplication.shared.endBackgroundTask(backgroundTask)
@@ -204,11 +220,11 @@ class LiveActivityManager: NSObject, ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             UIApplication.shared.endBackgroundTask(backgroundTask)
             Task {
-                for activity in Activity<BitcoinTickerAttributes>.activities {
-                    let contentState: BitcoinTickerAttributes.ContentState = BitcoinTickerAttributes.ContentState(
-                        image: type.image,
+                for activity in Activity<TickerAttribute>.activities {
+                    let contentState: TickerAttribute.ContentState = TickerAttribute.ContentState(
+                        image: type.image ?? "",
                         price: price,
-                        symbol: type.code,
+                        symbol: type.symbol,
                         isIncrease: isIncrease
                     )
                     await activity.update(ActivityContent(state: contentState, staleDate: Date.now, relevanceScore: 0), alertConfiguration: nil)
@@ -221,7 +237,7 @@ class LiveActivityManager: NSObject, ObservableObject {
         self.timer?.invalidate()
         self.timer = nil
         Task.detached(priority: .high) {
-            for activity in Activity<BitcoinTickerAttributes>.activities {
+            for activity in Activity<TickerAttribute>.activities {
                 print("Ending Live Activity: \(activity.id)")
                 await activity.end(nil, dismissalPolicy: .immediate)
             }
@@ -231,97 +247,144 @@ class LiveActivityManager: NSObject, ObservableObject {
     }
 }
 
-
 extension LiveActivityManager {
-    func getCoinList() {
+    func loadData() {
+        self.favorites = getFavoriteList()
         Task { @MainActor in
-            self.message = "Loading..."
-            self.originalList = await self.getCoingeckoCryptoList()
-            self.coinList = self.originalList
-            self.message = nil
-        }
-    }
-    func getCoingeckoCryptoList() async -> [Crypto] {
-        return await withCheckedContinuation { con in
-            let url = URL(string: "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd")!
-            let task = URLSession.shared.dataTask(with: url) { data, response, error in
-                if let error = error {
-                    print("Error: \(error.localizedDescription)")
-                    return
-                }
-                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                    print("Invalid response or status code")
-                    return
-                }
-                
-                guard let data = data else {
-                    print("No data received")
-                    return
-                }
-                do {
-                    let object = try JSONDecoder().decode([CoinGecko].self, from: data)
-                    con.resume(returning: object.map({
-                        $0.toCrypto()
-                    }))
-                } catch let jsonError {
-                    print("JSON error: \(jsonError)")
-                    con.resume(returning: [])
-                }
-            }
-            task.resume()
+//            self.recommendedList = await getRecommendedList().map {
+//                MoneyAsset(code: $0.symbol, screener: "", exchange: "", open: 0, close: 0, image: $0.logoid ?? "", name: "")
+//            }
+            
         }
     }
     
-    func getCoinbaseCryptoList() async -> [CoinBaseCryptoType] {
+    func search(text: String) {
+        guard text != "" else {
+            DispatchQueue.main.async { self.searchResultList = [] }
+            return
+        }
+        guard let url = URL(string: "\(baseUrl)/trading-view/search?query=\(text)") else {
+            DispatchQueue.main.async { self.searchResultList = [] }
+            return
+        }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+                DispatchQueue.main.async { self.searchResultList = [] }
+                return
+            }
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data else {
+                DispatchQueue.main.async { self.searchResultList = [] }
+                return
+            }
+            do {
+                let object = try JSONDecoder().decode([MoneyAsset].self, from: data)
+                DispatchQueue.main.async { self.searchResultList = object }
+            } catch let jsonError {
+                print("JSON error: \(jsonError)")
+                DispatchQueue.main.async { self.searchResultList = [] }
+            }
+        }.resume()
+    }
+    
+    func getFavoriteList() -> [MoneyAsset] {
+        let favoriteAssets = Configuration.favoriteAssets
+        return favoriteAssets.compactMap { asset in
+            let data = asset.components(separatedBy: "+")
+            guard data.count == 5 else { return nil }
+            return MoneyAsset(symbol: data[0], screener: data[1], exchange: data[2], open: 0, close: 0, image: data[4], desc: data[3])
+        }
+    }
+    
+    func addFavoriteAsset(asset: MoneyAsset) {
+        var currentFavorite = Configuration.favoriteAssets
+        let assetString = "\(asset.symbol)+\(asset.screener)+\(asset.exchange)+\(asset.desc ?? "")+\(asset.image ?? "")"
+        if !currentFavorite.contains(assetString) {
+            currentFavorite.append(assetString)
+            Configuration.favoriteAssets = currentFavorite
+        }
+    }
+    
+    func removeFavoriateAsset(asset: MoneyAsset) {
+        var currentFavorite = Configuration.favoriteAssets
+        let assetString = "\(asset.symbol)+\(asset.screener)+\(asset.exchange)+\(asset.desc ?? "")+\(asset.image ?? "")"
+        currentFavorite.removeAll {
+            $0 == assetString
+        }
+        Configuration.favoriteAssets = currentFavorite
+    }
+    
+    func getRecommendedList() async -> [TradingViewSymbol] {
+        guard let url = URL(string: "\(baseUrl)/trading-view/recommended") else { return [] }
         return await withCheckedContinuation { con in
-            let url = URL(string: "https://api.coinbase.com/v2/currencies/crypto")!
-            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            URLSession.shared.dataTask(with: url) { data, response, error in
                 if let error = error {
                     print("Error: \(error.localizedDescription)")
+                    con.resume(returning: [])
                     return
                 }
-                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                    print("Invalid response or status code")
-                    return
-                }
-                
-                guard let data = data else {
-                    print("No data received")
+                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data else {
+                    con.resume(returning: [])
                     return
                 }
                 do {
-                    let object = try JSONDecoder().decode(CoinBaseCryptoListResponse.self, from: data)
-                    con.resume(returning: object.data)
+                    let object = try JSONDecoder().decode(RecommenedListResponse.self, from: data)
+                    let result = object.items.map {
+                        $0.relatedSymbols
+                    }
+                    var res = [TradingViewSymbol]()
+                    result.forEach { list in
+                        res.append(contentsOf: list)
+                    }
+                    con.resume(returning: res)
                 } catch let jsonError {
                     print("JSON error: \(jsonError)")
                     con.resume(returning: [])
                 }
-            }
-            task.resume()
+            }.resume()
         }
     }
-    func getPrice(code: String, completion: @escaping (String) -> Void) {
-        let url = URL(string: "https://api.coinbase.com/v2/prices/\(code)-USD/spot")!
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("Error: \(error.localizedDescription)")
-                return
-            }
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                print("Invalid response or status code")
-                return
-            }
-            
-            guard let data = data else {
-                print("No data received")
-                return
-            }
-            do {
-                let object = try JSONDecoder().decode(CoinBaseCrypto.self, from: data)
-                completion(object.data.amount)
-            } catch let jsonError {
-                print("JSON error: \(jsonError)")
-            }
-        }.resume()
+    func loadData(asset: MoneyAsset) async -> MoneyAsset {
+        var urlComponents = URLComponents(string: "\(baseUrl)/trading-view/data")!
+        urlComponents.queryItems = [
+            URLQueryItem(name: "symbol", value: asset.symbol),
+            URLQueryItem(name: "screener", value: asset.screener),
+            URLQueryItem(name: "exchange", value: asset.exchange),
+        ]
+        guard let url = urlComponents.url else { return asset }
+        return await withCheckedContinuation { con in
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                if let error = error {
+                    print("Error: \(error.localizedDescription)")
+                    con.resume(returning: asset)
+                    return
+                }
+                guard let data = data else {
+                    con.resume(returning: asset)
+                    return
+                }
+                do {
+                    let object = try JSONDecoder().decode(MoneyAssetResponse.self, from: data)
+                    con.resume(returning: object.data)
+                } catch let jsonError {
+                    print("JSON error: \(jsonError)")
+                    con.resume(returning: asset)
+                }
+            }.resume()
+        }
     }
+    
+}
+
+struct RecommenedListResponse: Codable {
+    let items: [TradingViewItem]
+}
+
+struct TradingViewItem: Codable {
+    let relatedSymbols: [TradingViewSymbol]
+}
+
+struct TradingViewSymbol: Codable {
+    let logoid: String?
+    let symbol: String
 }

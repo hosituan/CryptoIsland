@@ -56,6 +56,7 @@ struct SettingsView: View {
                     Spacer()
                     Picker("", selection: $stopAfter) {
                         Text("Never").tag(0)
+                        Text("1 minute").tag(0.017)
                         Text("15 minutes").tag(0.25)
                         Text("30 minutes").tag(0.5)
                         Text("1 hour").tag(1)

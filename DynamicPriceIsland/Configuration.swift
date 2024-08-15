@@ -47,6 +47,24 @@ struct Configuration {
             userDefault.setValue(newValue, forKey: "stopAfter")
         }
     }
+    
+    static var stopAt: Int {
+        get {
+            return userDefault.integer(forKey: "stopAt")
+        }
+        set {
+            userDefault.setValue(newValue, forKey: "stopAt")
+        }
+    }
+    
+    static var favoriteAssets: [String] {
+        get {
+            return Array(Set((userDefault.string(forKey: "favoriteAsset")?.components(separatedBy: "|") ?? [])))
+        }
+        set {
+            userDefault.setValue(newValue.joined(separator: "|"), forKey: "favoriteAsset")
+        }
+    }
 }
 
 extension Color {
