@@ -57,36 +57,77 @@ struct HomeScreenView: View {
     @State private var message: String?
     @State private var subscribeType: MoneyAsset = .empty
     var body: some View {
-        ScrollView {
-            LazyVStack(alignment: .leading, spacing: 16, pinnedViews: [.sectionHeaders]) {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 4) {
-                        ForEach(Screener.allCases) { screener in
-                            ScreenerView(screener: screener, selected: liveActivityManager.screener)
-                                .onTapGesture {
-                                    liveActivityManager.screener = screener
+        VStack(spacing: 16) {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 4) {
+                    ForEach(Screener.allCases) { screener in
+                        ScreenerView(screener: screener, selected: liveActivityManager.screener)
+                            .onTapGesture {
+                                liveActivityManager.screener = screener
+                            }
+                            .id(UUID())
+                    }
+                }
+                .padding(.horizontal, 16)
+            }
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 16, pinnedViews: [.sectionHeaders]) {
+                    if liveActivityManager.searchText.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
+                        Section {
+                            if liveActivityManager.isSearching {
+                                Text("Searching...")
+                                    .font(.system(size: 14))
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                            } else if liveActivityManager.searchResultList.isEmpty {
+                                Text("No results")
+                                    .font(.system(size: 14))
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                            } else {
+                                ForEach(liveActivityManager.searchResultList) { item in
+                                    MoneyAssetItemView(asset: item, buttonTitle: "Add", onTapAction: {
+                                        UIApplication.shared.inputViewController?.view.endEditing(true)
+                                        liveActivityManager.addFavoriteAsset(asset: item)
+                                        liveActivityManager.searchText = ""
+                                        liveActivityManager.message = "Adding..."
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                                            liveActivityManager.message = nil
+                                            liveActivityManager.loadData()
+                                        })
+                                    })
+                                    .id(UUID())
+                                    .padding(.horizontal, 16)
+                                    Divider()
+                                        .padding(.horizontal, 16)
                                 }
-                                .id(UUID())
+                            }
+                        } header: {
+                            Text("Search Result")
+                                .font(.system(size: 14, weight: .semibold))
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 8)
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .background(Color.gray.opacity(0.95))
                         }
                     }
-                    .padding(.horizontal, 16)
-                }
-                if liveActivityManager.searchText.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
                     Section {
-                        if liveActivityManager.isSearching {
-                            Text("Searching...")
-                                .font(.system(size: 14))
-                                .frame(maxWidth: .infinity, alignment: .center)
-                        } else if liveActivityManager.searchResultList.isEmpty {
-                            Text("No results")
+                        if liveActivityManager.favorites.isEmpty {
+                            Text("No favorite symbols")
                                 .font(.system(size: 14))
                                 .frame(maxWidth: .infinity, alignment: .center)
                         } else {
-                            ForEach(liveActivityManager.searchResultList) { item in
-                                MoneyAssetItemView(asset: item, buttonTitle: "Add", onTapAction: {
-                                    liveActivityManager.addFavoriteAsset(asset: item)
-                                    liveActivityManager.loadData()
-                                    liveActivityManager.searchText = ""
+                            ForEach(liveActivityManager.favorites) { item in
+                                MoneyAssetItemView(asset: item, buttonTitle: self.subscribeType == item ? "Unsubscribe" : "Subscribe", onTapAction: {
+                                    if self.subscribeType == item {
+                                        self.subscribeType = .empty
+                                        LiveActivityManager.shared.message = "Stopping..."
+                                        LiveActivityManager.shared.endActivity(completion: { })
+                                        
+                                    } else {
+                                        LiveActivityManager.shared.message = "Starting..."
+                                        LiveActivityManager.shared.startActivity(asset: item)
+                                        self.subscribeType = item
+                                    }
                                 })
                                 .id(UUID())
                                 .padding(.horizontal, 16)
@@ -95,54 +136,21 @@ struct HomeScreenView: View {
                             }
                         }
                     } header: {
-                        Text("Search Result")
+                        Text("Favorite")
                             .font(.system(size: 14, weight: .semibold))
                             .padding(.horizontal, 16)
                             .padding(.vertical, 8)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(Color.gray.opacity(0.9))
+                            .background(Color.gray.opacity(0.95))
                     }
                 }
-                Section {
-                    if liveActivityManager.favorites.isEmpty {
-                        Text("No favorite symbols")
-                            .font(.system(size: 14))
-                            .frame(maxWidth: .infinity, alignment: .center)
-                    } else {
-                        ForEach(liveActivityManager.favorites) { item in
-                            MoneyAssetItemView(asset: item, buttonTitle: self.subscribeType == item ? "Unsubscribe" : "Subscribe", onTapAction: {
-                                if self.subscribeType == item {
-                                    self.subscribeType = .empty
-                                    LiveActivityManager.shared.message = "Stopping..."
-                                    LiveActivityManager.shared.endActivity(completion: { })
-                                    
-                                } else {
-                                    LiveActivityManager.shared.message = "Starting..."
-                                    LiveActivityManager.shared.startActivity(asset: item)
-                                    self.subscribeType = item
-                                }
-                            })
-                            
-                            .padding(.horizontal, 16)
-                            Divider()
-                                .padding(.horizontal, 16)
-                        }
-                    }
-                } header: {
-                    Text("Favorite")
-                        .font(.system(size: 14, weight: .semibold))
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color.gray.opacity(0.9))
-                }
+                .padding(.bottom, 16)
+//                .id(UUID())
             }
-            .padding(.bottom, 16)
-            .searchable(text: $liveActivityManager.searchText)
-            .disableAutocorrection(true)
         }
+        .searchable(text: $liveActivityManager.searchText)
+        .disableAutocorrection(true)
         .onChange(of: message, initial: false, {
             if message != nil {
                 self.showingAlert = true
@@ -168,7 +176,7 @@ struct MoneyAssetItemView: View {
     @State private var price: Double = 0
     @State var task: Task<Void, Never>? = nil
     @State var showingOptions = false
-    let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
+    @State var finishLoading = false
     var body: some View {
         HStack(spacing: 10) {
             AsyncImage(url: URL(string: type.getLogoUrl())) { image in
@@ -228,6 +236,7 @@ struct MoneyAssetItemView: View {
             }, label: {
                 Text(buttonTitle)
                     .font(.system(size: 14, weight: .semibold))
+                    .minimumScaleFactor(0.5)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 6)
                     .background(buttonTitle == "Unsubscribe" ? Color.red : Color.blue)
@@ -239,10 +248,8 @@ struct MoneyAssetItemView: View {
         .contentShape(.rect)
         .onAppear(perform: {
             self.type = self.asset
-        })
-        .onReceive(timer) { input in
             self.loadData()
-        }
+        })
         .onTapGesture {
             showingOptions.toggle()
         }
@@ -260,12 +267,17 @@ struct MoneyAssetItemView: View {
                 ]
             )
         }
+        .onChange(of: self.finishLoading, { oldValue, newValue in
+            self.loadData()
+        })
     }
     
     func loadData() {
         guard buttonTitle != "Add" else { return }
-        Task {
+        Task { @MainActor in
             self.type = await LiveActivityManager.shared.loadTradingViewData(asset: self.asset)
+            try? await Task.sleep(nanoseconds: 1.nanoseconds)
+            self.finishLoading.toggle()
         }
     }
     

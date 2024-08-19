@@ -376,14 +376,14 @@ extension LiveActivityManager {
         let favoriteAssets = Configuration.favoriteAssets
         return favoriteAssets.compactMap { asset in
             let data = asset.components(separatedBy: "+")
-            guard data.count == 5 else { return nil }
-            return MoneyAsset(symbol: data[0], screener: data[1], exchange: data[2], open: 0, close: 0, image: data[4], desc: data[3])
+            guard data.count == 3 else { return nil }
+            return MoneyAsset(symbol: data[0], screener: data[1], exchange: data[2], open: 0, close: 0, image: "", desc: "")
         }
     }
     
     func addFavoriteAsset(asset: MoneyAsset) {
         var currentFavorite = Configuration.favoriteAssets
-        let assetString = "\(asset.symbol ?? "")+\(asset.screener ?? "")+\(asset.exchange ?? "")+\(asset.desc ?? "")+\(asset.image ?? "")"
+        let assetString = "\(asset.symbol ?? "")+\(asset.screener ?? "")+\(asset.exchange ?? "")"
         if !currentFavorite.contains(assetString) {
             currentFavorite.append(assetString)
             Configuration.favoriteAssets = currentFavorite
@@ -394,7 +394,7 @@ extension LiveActivityManager {
     
     func removeFavoriateAsset(asset: MoneyAsset) {
         var currentFavorite = Configuration.favoriteAssets
-        let assetString = "\(asset.symbol ?? "")+\(asset.screener ?? "")+\(asset.exchange ?? "")+\(asset.desc ?? "")+\(asset.image ?? "")"
+        let assetString = "\(asset.symbol ?? "")+\(asset.screener ?? "")+\(asset.exchange ?? "")"
         currentFavorite.removeAll {
             $0 == assetString
         }
