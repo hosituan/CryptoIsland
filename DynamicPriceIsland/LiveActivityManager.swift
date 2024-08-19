@@ -80,7 +80,8 @@ enum Screener: String, CaseIterable, Equatable, Identifiable {
 
 class LiveActivityManager: NSObject, ObservableObject {
     public static let shared: LiveActivityManager = LiveActivityManager()
-    private let baseUrl = "http://127.0.0.1:8080"//"https://dynamicisland-4bizugbf.b4a.run"
+//    private let baseUrl = "http://127.0.0.1:8080"
+    private let baseUrl = "https://dynamicisland-4bizugbf.b4a.run"
     private var currentActivity: Activity<TickerAttribute>? = nil
     private var lastPrice: Double = 0.0
     private var price: Double = 0.0
@@ -122,7 +123,10 @@ class LiveActivityManager: NSObject, ObservableObject {
         let deviceId = UIDevice.current.identifierForVendor?.uuidString ?? "DeviceID"
         
         var urlComponents = URLComponents(string: baseURL)!
-        let nextMins = Configuration.stopAfter * 60
+        var nextMins = Configuration.stopAfter * 60
+        if nextMins == 0 {
+           nextMins = 9999
+        }
         let stopAt = Int(Date().addingMinutes(Int(nextMins)).timeIntervalSince1970)
         Configuration.stopAt = stopAt
         var queryItems = [
@@ -262,7 +266,7 @@ class LiveActivityManager: NSObject, ObservableObject {
             }
         })
 
-        self.startTimer(asset: asset)
+//        self.startTimer(asset: asset)
     }
     
     private func startTimer(asset: MoneyAsset) {

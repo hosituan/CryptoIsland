@@ -44,10 +44,10 @@ struct LiveActivityLiveActivity: Widget {
                 }
             } compactLeading: {
                 HStack {
-                    Image(context.state.symbol.lowercased())
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 24, height: 24)
+//                    Image(context.state.symbol.lowercased())
+//                        .resizable()
+//                        .aspectRatio(contentMode: .fit)
+//                        .frame(width: 24, height: 24)
                     Text(context.state.symbol)
                     Spacer()
                 }
