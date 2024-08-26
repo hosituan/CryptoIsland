@@ -76,6 +76,7 @@ struct SettingsView: View {
             .ignoresSafeArea()
         })
         .navigationTitle("Settings")
+        .navigationBarTitleDisplayMode(.inline)
         .onChange(of: self.selectedUpColor) { oldValue, newValue in
             Configuration.upColor = newValue
         }

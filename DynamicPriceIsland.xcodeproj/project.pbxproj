@@ -23,6 +23,7 @@
 		FB2084842C528EB00046BC77 /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2084832C528EB00046BC77 /* LiveActivityManager.swift */; };
 		FB2084862C5295F40046BC77 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2084852C5295F40046BC77 /* AppIntent.swift */; };
 		FB2084872C52967D0046BC77 /* LiveActivityLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1306E22C502909003D64D4 /* LiveActivityLiveActivity.swift */; };
+		FB28C4762C7C7EA100008037 /* AsyncSvgImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB28C4752C7C7EA100008037 /* AsyncSvgImage.swift */; };
 		FB4030872C52A8C900D9E387 /* Extension+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4030862C52A8C900D9E387 /* Extension+.swift */; };
 		FB4030882C52A8CE00D9E387 /* Extension+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4030862C52A8C900D9E387 /* Extension+.swift */; };
 		FB40308A2C52A8F700D9E387 /* PriceTicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4030892C52A8F700D9E387 /* PriceTicker.swift */; };
@@ -79,6 +80,7 @@
 		FB2084832C528EB00046BC77 /* LiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityManager.swift; sourceTree = "<group>"; };
 		FB2084852C5295F40046BC77 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
 		FB2084892C52980C0046BC77 /* DynamicPriceIslandWidgetExtension.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = DynamicPriceIslandWidgetExtension.entitlements; sourceTree = "<group>"; };
+		FB28C4752C7C7EA100008037 /* AsyncSvgImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncSvgImage.swift; sourceTree = "<group>"; };
 		FB4030862C52A8C900D9E387 /* Extension+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+.swift"; sourceTree = "<group>"; };
 		FB4030892C52A8F700D9E387 /* PriceTicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceTicker.swift; sourceTree = "<group>"; };
 		FBCAC9702C5F54900027DF14 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				FBCAC9742C5F5CB80027DF14 /* CoinBaseCryptoType.swift */,
 				FB1306C72C5023C2003D64D4 /* ContentView.swift */,
 				FBCAC9722C5F58C20027DF14 /* HomeScreenView.swift */,
+				FB28C4752C7C7EA100008037 /* AsyncSvgImage.swift */,
 				FBCAC9762C5F7D180027DF14 /* Launch Screen.storyboard */,
 				FBCAC9702C5F54900027DF14 /* SettingsView.swift */,
 				FB4030862C52A8C900D9E387 /* Extension+.swift */,
@@ -285,6 +288,7 @@
 				FBCAC9752C5F5CB80027DF14 /* CoinBaseCryptoType.swift in Sources */,
 				FB20847B2C511C1D0046BC77 /* BitcoinAttribute.swift in Sources */,
 				FBCAC9712C5F54900027DF14 /* SettingsView.swift in Sources */,
+				FB28C4762C7C7EA100008037 /* AsyncSvgImage.swift in Sources */,
 				FB1306C82C5023C2003D64D4 /* ContentView.swift in Sources */,
 				FBCAC9732C5F58C20027DF14 /* HomeScreenView.swift in Sources */,
 				FB2084842C528EB00046BC77 /* LiveActivityManager.swift in Sources */,

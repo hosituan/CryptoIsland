@@ -65,6 +65,15 @@ struct Configuration {
             userDefault.setValue(newValue.joined(separator: "|"), forKey: "favoriteAsset")
         }
     }
+    
+    static func saveImage(symbol: String, image: UIImage?) {
+        guard let image else { return }
+        userDefault.setValue(image.jpegData(compressionQuality: 1), forKey: symbol)
+    }
+    
+    static func getImage(symbol: String) -> UIImage? {
+        return UIImage(data: userDefault.data(forKey: symbol) ?? Data())
+    }
 }
 
 extension Color {

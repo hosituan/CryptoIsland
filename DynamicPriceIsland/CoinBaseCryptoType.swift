@@ -20,7 +20,12 @@ struct MoneyAsset: Codable, Identifiable, Equatable {
     var changePercentage: Double?
     var price: Double?
     var volume: Double?
-    static let empty: MoneyAsset = .init(symbol: "", screener: "", exchange: "", open: 0, close: 0, image: "", desc: "")
+    var lastPrice: Double?
+    
+    func isIncrease() -> Bool {
+        return (price ?? 0) >= (lastPrice ?? 0)
+    }
+    static let empty: MoneyAsset = .init(symbol: nil, screener: "", exchange: "", open: 0, close: 0, image: "", desc: nil)
     
     func getLogoUrl() -> String {
         return "https://s3-symbol-logo.tradingview.com/\(self.image ?? "").svg"

@@ -19,7 +19,7 @@ struct ScreenerView: View {
             .padding(.horizontal, 8)
             .padding(.vertical, 2)
             .background(screener == selected ? Color.black.cornerRadius(5) : Color.white.cornerRadius(5))
-            .borderRadius(5, color: Color.black)
+            .borderRadius(5, color: screener == selected ? Color.white : Color.black)
             .cornerRadius(5)
             .contentShape(.rect)
             .clipped()
@@ -94,7 +94,6 @@ struct HomeScreenView: View {
                                             liveActivityManager.loadData()
                                         })
                                     })
-                                    .id(UUID())
                                     .padding(.horizontal, 16)
                                     Divider()
                                         .padding(.horizontal, 16)
@@ -129,7 +128,6 @@ struct HomeScreenView: View {
                                         self.subscribeType = item
                                     }
                                 })
-                                .id(UUID())
                                 .padding(.horizontal, 16)
                                 Divider()
                                     .padding(.horizontal, 16)
@@ -149,6 +147,9 @@ struct HomeScreenView: View {
 //                .id(UUID())
             }
         }
+        .refreshable {
+            liveActivityManager.loadData()
+        }
         .searchable(text: $liveActivityManager.searchText)
         .disableAutocorrection(true)
         .onChange(of: message, initial: false, {
@@ -162,8 +163,9 @@ struct HomeScreenView: View {
             }
         }
         .navigationTitle("Crypto Island")
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            LiveActivityManager.shared.loadData()
+            liveActivityManager.loadData()
         }
     }
 }
@@ -177,39 +179,49 @@ struct MoneyAssetItemView: View {
     @State var task: Task<Void, Never>? = nil
     @State var showingOptions = false
     @State var finishLoading = false
+    @State var image: URL?
+    @State var id = UUID()
+    @State var retryCount = 0
     var body: some View {
         HStack(spacing: 10) {
-            AsyncImage(url: URL(string: type.getLogoUrl())) { image in
+            AsyncSVGImage(url: image, uiImageResult: { uiimage in
+                Configuration.saveImage(symbol: asset.symbol ?? "", image: uiimage)
+            }) { image in
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 36, height: 36)
+                    .cornerRadius(18)
             } placeholder: {
-                Rectangle()
-                    .fill(Color.gray.opacity(0.1))
+                Image("tradingView")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
                     .frame(width: 36, height: 36)
                     .cornerRadius(18)
             }
+            .id(id)
             VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: 4) {
                     Text("\(type.screener ?? "")")
                         .font(.system(size: 12))
                         .lineLimit(1)
-                        .fixedSize()
+                        .minimumScaleFactor(0.5)
                         .foregroundColor(.gray)
                     Text("\(type.exchange?.uppercased() ?? "")")
                         .font(.system(size: 12, weight: .semibold))
+                        .minimumScaleFactor(0.5)
                         .lineLimit(1)
-                        .fixedSize()
-                    Spacer()
                 }
-                Text(type.symbol ?? "")
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(.black)
-                Text(type.desc ?? "")
-                    .font(.system(size: 12))
-                    .foregroundColor(.gray)
-                    .lineLimit(3)
+                if let symbol = type.symbol, symbol != "" {
+                    Text(symbol)
+                        .font(.system(size: 16, weight: .semibold))
+                }
+                if let desc = type.desc, desc != "" {
+                    Text(desc)
+                        .font(.system(size: 12))
+                        .foregroundColor(.gray)
+                        .lineLimit(3)
+                }
             }
             
             Spacer()
@@ -219,15 +231,19 @@ struct MoneyAssetItemView: View {
                         .font(.system(size: 14))
                         .padding(4)
                         .foregroundColor(.white)
-                        .background((type.close ?? 0 >= type.open ?? 0) ? Configuration.upColor : Configuration.downColor)
+                        .minimumScaleFactor(0.5)
+                        .lineLimit(1)
+                        .background(type.isIncrease() ? Configuration.upColor : Configuration.downColor)
                         .cornerRadius(5)
                 } else {
                     Text((type.price ?? 0).asCurrency())
                         .font(.system(size: 14))
                         .padding(4)
                         .foregroundColor(.white)
-                        .background((type.close ?? 0 >= type.open ?? 0) ? Configuration.upColor : Configuration.downColor)
+                        .background(type.isIncrease() ? Configuration.upColor : Configuration.downColor)
                         .cornerRadius(5)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
                         .redacted(reason: .placeholder)
                 }
             }
@@ -235,7 +251,7 @@ struct MoneyAssetItemView: View {
                 onTapAction()
             }, label: {
                 Text(buttonTitle)
-                    .font(.system(size: 14, weight: .semibold))
+                    .font(.system(size: 12, weight: .semibold))
                     .minimumScaleFactor(0.5)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 6)
@@ -273,10 +289,22 @@ struct MoneyAssetItemView: View {
     }
     
     func loadData() {
-        guard buttonTitle != "Add" else { return }
         Task { @MainActor in
-            self.type = await LiveActivityManager.shared.loadTradingViewData(asset: self.asset)
-            try? await Task.sleep(nanoseconds: 1.nanoseconds)
+            if buttonTitle != "Add" {
+                var newType = await LiveActivityManager.shared.loadTradingViewData(asset: self.asset)
+                if newType.price != self.type.price {
+                    newType.lastPrice = self.type.price
+                } else {
+                    newType.lastPrice = self.type.lastPrice
+                }
+                self.type = newType
+            }
+            if self.image == nil, self.retryCount < 10 {
+                self.image = await LiveActivityManager.shared.loadImage(asset: self.asset)
+                self.retryCount += 1
+                self.id = UUID()
+            }
+            try? await Task.sleep(nanoseconds: 0.5.nanoseconds)
             self.finishLoading.toggle()
         }
     }

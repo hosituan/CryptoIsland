@@ -16,12 +16,12 @@ enum Screener: String, CaseIterable, Equatable, Identifiable {
     var id: String { self.rawValue }
     case all
     case america
+    case cfd
     case forex
     case crypto
     case indonesia
     case india
     case italy
-    case cfd
     case uk
     case brazil
     case vietnam
@@ -359,7 +359,9 @@ extension LiveActivityManager {
             do {
                 let object = try JSONDecoder().decode([MoneyAsset].self, from: data)
                 DispatchQueue.main.async { 
-                    self.searchResultList = object
+                    self.searchResultList = object.filter({
+                        !self.favorites.contains($0)
+                    })
                     self.isSearching = false
                 }
             } catch let jsonError {
@@ -475,6 +477,57 @@ extension LiveActivityManager {
         URLSession.shared.dataTask(with: url) { data, response, error in
         }.resume()
     }
+    
+    func loadImage(asset: MoneyAsset) async -> URL? {
+        return await withCheckedContinuation { con in
+            guard let url = URL(string: "https://www.tradingview.com/api/v1/minds/popular/?symbol=\(asset.exchange ?? "")%3A\(asset.symbol?.extractCurrencyPair() ?? "")&limit=1")
+            else {
+                con.resume(returning: nil)
+                return
+            }
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                if let error = error {
+                    print("Error: \(error.localizedDescription)")
+                    con.resume(returning: nil)
+                    return
+                }
+                guard let data = data else {
+                    con.resume(returning: nil)
+                    return
+                }
+                do {
+                    let result = try JSONDecoder().decode([TradingViewSymbolData].self, from: data)
+                    if let imageUrl = URL(string: result.compactMap({ $0.getImageUrl(asset: asset )}).first ?? "") {
+                        con.resume(returning: imageUrl)
+                    } else {
+                        con.resume(returning: nil)
+                    }
+                } catch let jsonError {
+                    print("URL: \(url.absoluteString) JSON error: \(jsonError)")
+                    con.resume(returning: nil)
+                }
+            }.resume()
+        }
+    }
+}
+
+
+struct TradingViewSymbolData: Codable {
+    var symbols_info: [String: TradingViewSymbolDataInfo]?
+    
+    func getImageUrl(asset: MoneyAsset) -> String? {
+        var foundKey = ""
+        symbols_info?.keys.forEach({ key in
+            if key.contains(asset.symbol?.extractCurrencyPair() ?? "") {
+                foundKey = key
+            }
+        })
+        return symbols_info?[foundKey]?.medium_logo_urls?.compactMap({ $0 }).first
+    }
+}
+
+struct TradingViewSymbolDataInfo: Codable {
+    var medium_logo_urls: [String]?
 }
 
 struct TradingViewPrice: Codable {

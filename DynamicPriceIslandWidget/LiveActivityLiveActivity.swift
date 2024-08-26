@@ -13,16 +13,17 @@ struct LiveActivityLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: TickerAttribute.self) { context in
             HStack {
-                Image(context.state.symbol.lowercased())
+                Image(uiImage: Configuration.getImage(symbol: context.state.symbol) ?? UIImage())
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 24, height: 24)
-                Text(context.state.symbol)
-                    .font(.system(size: 14))
+                    .cornerRadius(12)
+                Text(context.state.symbol.replacingOccurrences(of: "USDT", with: "").replacingOccurrences(of: "USDC", with: "").replacingOccurrences(of: "USD", with: ""))
+                    .font(.system(size: 12))
                 Spacer()
                 Text("\(context.state.price.toDouble().asCurrency())")
                     .padding(2)
-                    .font(.system(size: 14))
+                    .font(.system(size: 16))
                     .padding(.horizontal, 10)
                     .minimumScaleFactor(0.5)
                     .foregroundColor(.white)
@@ -34,21 +35,38 @@ struct LiveActivityLiveActivity: Widget {
         } dynamicIsland: { context in
             DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    Text("")
+                    HStack {
+                        Image(uiImage: Configuration.getImage(symbol: context.state.symbol) ?? UIImage())
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 24, height: 24)
+                            .cornerRadius(12)
+                        Text(context.state.symbol)
+                            .font(.system(size: 12))
+                    }
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    Text("")
+                    Text("\(context.state.price.toDouble().asCurrency())")
+                        .padding(2)
+                        .font(.system(size: 16))
+                        .padding(.horizontal, 10)
+                        .minimumScaleFactor(0.5)
+                        .foregroundColor(.white)
+                        .background(context.state.isIncrease ? Configuration.upColor : Configuration.downColor)
+                        .cornerRadius(12)
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    Text("\(context.state.price.toDouble().asCurrency())")
+                    Text("")
                 }
             } compactLeading: {
                 HStack {
-//                    Image(context.state.symbol.lowercased())
-//                        .resizable()
-//                        .aspectRatio(contentMode: .fit)
-//                        .frame(width: 24, height: 24)
+                    Image(uiImage: Configuration.getImage(symbol: context.state.symbol) ?? UIImage())
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 24, height: 24)
+                        .cornerRadius(12)
                     Text(context.state.symbol)
+                        .font(.system(size: 12))
                     Spacer()
                 }
             } compactTrailing: {
@@ -56,6 +74,7 @@ struct LiveActivityLiveActivity: Widget {
                     Spacer()
                     Text("\(context.state.price.toDouble().asCurrency())")
                         .padding(2)
+                        .font(.system(size: 16))
                         .padding(.horizontal, 2)
                         .minimumScaleFactor(0.5)
                         .background(context.state.isIncrease ? Configuration.upColor : Configuration.downColor)
@@ -63,6 +82,7 @@ struct LiveActivityLiveActivity: Widget {
                 }
             } minimal: {
                 Text("\(context.state.price)")
+                    .font(.system(size: 16))
                     .padding(2)
                     .padding(.horizontal, 2)
                     .minimumScaleFactor(0.5)

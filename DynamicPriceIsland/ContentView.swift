@@ -25,6 +25,7 @@ struct ContentView: View {
             }
             .tabItem {
                 Label("Settings", systemImage: "gear")
+                    .tint(.accentColor)
             }
         }
         .overlay(alignment: .center) {
@@ -33,7 +34,7 @@ struct ContentView: View {
                     .ignoresSafeArea()
             }
         }
-        .accentColor(.black)
+        .accentColor(.primary)
     }
 }
 
@@ -47,7 +48,9 @@ struct CryptoProgressView: View {
                 Spacer()
                 HStack(spacing: 10) {
                     ProgressView()
+                        .tint(.black)
                     Text(message)
+                        .foregroundColor(.black)
                 }
                 .padding()
                 .background(Color.white)
@@ -65,6 +68,12 @@ struct CryptoProgressView: View {
 extension Int {
     var nanoseconds: UInt64 {
         return UInt64(self) * 1_000_000_000
+    }
+}
+
+extension Double {
+    var nanoseconds: UInt64 {
+        return UInt64(self * 1_000_000_000)
     }
 }
 
