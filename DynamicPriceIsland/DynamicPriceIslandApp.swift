@@ -13,7 +13,7 @@ import ActivityKit
 @main
 struct DynamicPriceIslandApp: App {
     init() {
-        LiveActivityManager.shared.endActivity(completion: { })
+//        LiveActivityManager.shared.endActivity(completion: { })
     }
     var body: some Scene {
         WindowGroup {

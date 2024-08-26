@@ -110,12 +110,16 @@ class LiveActivityManager: NSObject, ObservableObject {
         }
     }
     
-    func saveActivity(code: String?) {
-        UserDefaults.standard.setValue(code ?? "", forKey: "ticker")
+    func saveActivity(asset: MoneyAsset) {
+        if let object = try? JSONEncoder().encode(asset) {
+            UserDefaults.standard.setValue(object, forKey: "ticker")
+        }
     }
     
-    func getSavedActivity() -> String {
-        return UserDefaults.standard.string(forKey: "ticker") ?? ""
+    func getSavedActivity() -> MoneyAsset {
+        guard let data = UserDefaults.standard.data(forKey: "ticker") else { return .empty }
+        let object = try? JSONDecoder().decode(MoneyAsset.self, from: data)
+        return object ?? .empty
     }
     
     func callAPIToUpdate(deviceToken: String, asset: MoneyAsset) {
@@ -249,7 +253,7 @@ class LiveActivityManager: NSObject, ObservableObject {
                 content: .init(state:initialState , staleDate: nil),
                 pushType: .token
             )
-            self.saveActivity(code: asset.symbol)
+            self.saveActivity(asset: asset)
             DispatchQueue.main.async {
                 withAnimation {
                     self.message = "Starting..."
@@ -319,7 +323,7 @@ class LiveActivityManager: NSObject, ObservableObject {
                 print("Ending Live Activity: \(activity.id)")
                 await activity.end(nil, dismissalPolicy: .immediate)
             }
-            self.saveActivity(code: nil)
+            self.saveActivity(asset: .empty)
             self.callAPIToStop(completion: completion)
         }
     }
@@ -452,6 +456,7 @@ extension LiveActivityManager {
                 }
                 do {
                     let result = try JSONDecoder().decode(MoneyAsset.self, from: data)
+//                    print("Get result", result)
                     if result.price != nil {
                         var newAsset = asset
                         newAsset.price = result.price

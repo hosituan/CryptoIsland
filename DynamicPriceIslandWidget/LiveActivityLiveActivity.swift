@@ -18,8 +18,8 @@ struct LiveActivityLiveActivity: Widget {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 24, height: 24)
                     .cornerRadius(12)
-                Text(context.state.symbol.replacingOccurrences(of: "USDT", with: "").replacingOccurrences(of: "USDC", with: "").replacingOccurrences(of: "USD", with: ""))
-                    .font(.system(size: 12))
+                Text(context.state.symbol)
+                    .font(.system(size: 14))
                 Spacer()
                 Text("\(context.state.price.toDouble().asCurrency())")
                     .padding(2)
@@ -41,7 +41,7 @@ struct LiveActivityLiveActivity: Widget {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 24, height: 24)
                             .cornerRadius(12)
-                        Text(context.state.symbol)
+                        Text(context.state.symbol.replacingOccurrences(of: "USDT", with: "").replacingOccurrences(of: "USDC", with: "").replacingOccurrences(of: "USD", with: ""))
                             .font(.system(size: 12))
                     }
                 }
@@ -81,13 +81,11 @@ struct LiveActivityLiveActivity: Widget {
                         .cornerRadius(12)
                 }
             } minimal: {
-                Text("\(context.state.price)")
-                    .font(.system(size: 16))
-                    .padding(2)
-                    .padding(.horizontal, 2)
-                    .minimumScaleFactor(0.5)
-                    .foregroundColor(.white)
+                Image(uiImage: Configuration.getImage(symbol: context.state.symbol) ?? UIImage())
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
                     .background(context.state.isIncrease ? Configuration.upColor : Configuration.downColor)
+                    .frame(width: 24, height: 24)
                     .cornerRadius(12)
             }
             .widgetURL(URL(string: "http://www.apple.com"))

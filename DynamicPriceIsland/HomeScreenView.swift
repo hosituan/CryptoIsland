@@ -89,12 +89,13 @@ struct HomeScreenView: View {
                                         liveActivityManager.addFavoriteAsset(asset: item)
                                         liveActivityManager.searchText = ""
                                         liveActivityManager.message = "Adding..."
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                                             liveActivityManager.message = nil
                                             liveActivityManager.loadData()
                                         })
                                     })
                                     .padding(.horizontal, 16)
+                                    .id("\(item.id)_search")
                                     Divider()
                                         .padding(.horizontal, 16)
                                 }
@@ -129,6 +130,7 @@ struct HomeScreenView: View {
                                     }
                                 })
                                 .padding(.horizontal, 16)
+                                .id("\(item.id)_favorite")
                                 Divider()
                                     .padding(.horizontal, 16)
                             }
@@ -166,6 +168,10 @@ struct HomeScreenView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             liveActivityManager.loadData()
+            subscribeType = liveActivityManager.getSavedActivity()
+            if subscribeType != .empty {
+                liveActivityManager.startActivity(asset: self.subscribeType)
+            }
         }
     }
 }
